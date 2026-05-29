@@ -63,6 +63,10 @@ A single, hand-edited file listing every template:
 | `screenshot` | no | Repo-relative path to the preview image. |
 | `path` | yes | Repo-relative path to the template folder. |
 | `collections` | no | Collection keys in the template, shown as a quick summary. |
+| `author` | no | Display name of the template's creator (e.g. `snill`). |
+| `authorUrl` | no | Profile or org link for the author. |
+| `version` | no | Semver for the template itself (`1.0.0`). Bumped when the template's `datamodel.json` changes meaningfully. |
+| `updatedAt` | no | ISO date (`YYYY-MM-DD`) of the last meaningful update. Drives staleness signals in the picker. |
 
 Paths are repo-relative; the snill backend resolves them to raw GitHub URLs.
 
