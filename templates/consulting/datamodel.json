@@ -1,0 +1,813 @@
+{
+  "app": {
+    "title": "Consulting",
+    "subtitle": "Client & Project Management",
+    "sidebar": {
+      "groups": [
+        {
+          "label": "Main",
+          "items": [
+            {
+              "type": "button",
+              "label": "New Time Entry",
+              "action": "create",
+              "collection": "time_entries",
+              "icon": "plus"
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "page",
+              "page": "dashboard",
+              "label": "Dashboard",
+              "icon": "layout-dashboard"
+            },
+            {
+              "type": "collection",
+              "collection": "clients",
+              "label": "Clients",
+              "icon": "users"
+            },
+            {
+              "type": "collection",
+              "collection": "consultants",
+              "label": "Consultants",
+              "icon": "user-check"
+            },
+            {
+              "type": "collection",
+              "collection": "projects",
+              "label": "Projects",
+              "icon": "briefcase"
+            },
+            {
+              "type": "collection",
+              "collection": "time_entries",
+              "label": "Time Entries",
+              "icon": "clock"
+            }
+          ]
+        }
+      ]
+    },
+    "startPage": "dashboard",
+    "iconColor": null,
+    "icon": "users",
+    "roles": [
+      "consultant"
+    ]
+  },
+  "collections": {
+    "consultants": {
+      "label": "Consultants",
+      "singularLabel": "Consultant",
+      "icon": "user-check",
+      "listFields": [
+        "name",
+        "email",
+        "phone",
+        "status"
+      ],
+      "searchFields": [
+        "name",
+        "email",
+        "phone"
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "minLength": 1
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "phone": {
+            "type": "string",
+            "title": "Phone"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "enum": [
+              "active",
+              "inactive",
+              "contractor"
+            ],
+            "x-default": "active"
+          },
+          "hourly_rate": {
+            "type": "number",
+            "format": "currency",
+            "title": "Default Hourly Rate",
+            "minimum": 0,
+            "x-currency": "NOK"
+          },
+          "skills": {
+            "type": "string",
+            "format": "textarea",
+            "title": "Skills / Bio"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "formLayout": {
+        "groups": [
+          {
+            "label": "Basic Info",
+            "fields": [
+              "name",
+              "email",
+              "phone",
+              "status",
+              "hourly_rate"
+            ],
+            "cols": 2
+          },
+          {
+            "label": "Details",
+            "fields": [
+              "skills"
+            ],
+            "cols": 1
+          }
+        ]
+      },
+      "relatedCollections": [
+        {
+          "collection": "time_entries",
+          "foreignKey": "consultant._id",
+          "title": "Time Entries",
+          "displayFields": [
+            "date",
+            "project",
+            "hours",
+            "amount"
+          ],
+          "sort": {
+            "date": -1
+          }
+        }
+      ]
+    },
+    "clients": {
+      "label": "Clients",
+      "singularLabel": "Client",
+      "icon": "users",
+      "listFields": [
+        "name",
+        "email",
+        "phone",
+        "status"
+      ],
+      "searchFields": [
+        "name",
+        "email",
+        "phone"
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Client Name",
+            "minLength": 1
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "phone": {
+            "type": "string",
+            "title": "Phone"
+          },
+          "company": {
+            "type": "string",
+            "title": "Company"
+          },
+          "address": {
+            "type": "string",
+            "format": "textarea",
+            "title": "Address"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "enum": [
+              "active",
+              "inactive",
+              "prospect"
+            ],
+            "x-default": "active"
+          },
+          "hourly_rate": {
+            "type": "number",
+            "format": "currency",
+            "title": "Default Hourly Rate",
+            "minimum": 0,
+            "x-currency": "NOK"
+          },
+          "notes": {
+            "type": "string",
+            "format": "textarea",
+            "title": "Notes"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "formLayout": {
+        "groups": [
+          {
+            "label": "Basic Info",
+            "fields": [
+              "name",
+              "email",
+              "phone",
+              "company",
+              "status"
+            ],
+            "cols": 2
+          },
+          {
+            "label": "Details",
+            "fields": [
+              "address",
+              "hourly_rate",
+              "notes"
+            ],
+            "cols": 1
+          }
+        ]
+      },
+      "relatedCollections": [
+        {
+          "collection": "projects",
+          "foreignKey": "client._id",
+          "title": "Projects",
+          "displayFields": [
+            "name",
+            "status",
+            "start_date"
+          ],
+          "allowCreate": true,
+          "sort": {
+            "start_date": -1
+          }
+        }
+      ]
+    },
+    "projects": {
+      "label": "Projects",
+      "singularLabel": "Project",
+      "icon": "briefcase",
+      "listFields": [
+        "name",
+        "client",
+        "status",
+        "start_date"
+      ],
+      "searchFields": [
+        "name",
+        "description"
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Project Name",
+            "minLength": 1
+          },
+          "client": {
+            "type": "object",
+            "title": "Client",
+            "properties": {
+              "_id": {
+                "type": "string"
+              }
+            },
+            "x-lookup": {
+              "collection": "clients",
+              "displayField": "name",
+              "searchFields": [
+                "name",
+                "company"
+              ]
+            },
+            "x-writeOnce": true
+          },
+          "description": {
+            "type": "string",
+            "format": "textarea",
+            "title": "Description"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "enum": [
+              "planning",
+              "active",
+              "on_hold",
+              "completed"
+            ],
+            "x-default": "active"
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Start Date",
+            "x-default": "$date"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date",
+            "title": "End Date"
+          },
+          "budget": {
+            "type": "number",
+            "format": "currency",
+            "title": "Budget (Optional)",
+            "minimum": 0,
+            "x-currency": "NOK"
+          },
+          "total_hours": {
+            "type": "number",
+            "title": "Total Hours",
+            "x-calculate": "SUM(time_entries.hours)",
+            "x-hidden": false
+          },
+          "total_billable": {
+            "type": "number",
+            "format": "currency",
+            "title": "Total Billable",
+            "x-calculate": "SUM(time_entries.amount)",
+            "x-hidden": false,
+            "x-currency": "NOK"
+          }
+        },
+        "required": [
+          "name",
+          "client"
+        ]
+      },
+      "formLayout": {
+        "groups": [
+          {
+            "label": "Basic Info",
+            "fields": [
+              "name",
+              "client",
+              "status",
+              "start_date",
+              "end_date"
+            ],
+            "cols": 2
+          },
+          {
+            "label": "Budget & Tracking",
+            "fields": [
+              "budget",
+              "total_hours",
+              "total_billable"
+            ],
+            "cols": 2
+          },
+          {
+            "label": "Details",
+            "fields": [
+              "description"
+            ],
+            "cols": 1
+          }
+        ]
+      },
+      "relatedCollections": [
+        {
+          "collection": "time_entries",
+          "foreignKey": "project._id",
+          "title": "Time Entries",
+          "displayFields": [
+            "date",
+            "consultant",
+            "hours",
+            "rate",
+            "description",
+            "billable"
+          ],
+          "allowCreate": true,
+          "sort": {
+            "date": -1
+          },
+          "listSummary": [
+            {
+              "field": "hours",
+              "aggregate": "sum"
+            },
+            {
+              "field": "rate",
+              "aggregate": "sum"
+            },
+            {
+              "field": "amount",
+              "aggregate": "sum"
+            }
+          ]
+        }
+      ]
+    },
+    "time_entries": {
+      "label": "Time Entries",
+      "singularLabel": "Time Entry",
+      "icon": "clock",
+      "listFields": [
+        "date",
+        "project",
+        "consultant",
+        "hours",
+        "billable",
+        "amount"
+      ],
+      "searchFields": [
+        "description",
+        "project.name",
+        "consultant.name"
+      ],
+      "allowBulkDelete": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date",
+            "x-default": "$date"
+          },
+          "project": {
+            "type": "object",
+            "title": "Project",
+            "properties": {
+              "_id": {
+                "type": "string"
+              }
+            },
+            "x-lookup": {
+              "collection": "projects",
+              "displayField": [
+                "name",
+                "client"
+              ],
+              "searchFields": [
+                "name"
+              ]
+            }
+          },
+          "consultant": {
+            "type": "object",
+            "title": "Consultant",
+            "properties": {
+              "_id": {
+                "type": "string"
+              }
+            },
+            "x-lookup": {
+              "collection": "$users",
+              "displayField": "name",
+              "searchFields": [
+                "name",
+                "email"
+              ]
+            },
+            "x-default": "$loggedOnUser"
+          },
+          "hours": {
+            "type": "number",
+            "title": "Hours",
+            "minimum": 0,
+            "maximum": 24
+          },
+          "billable": {
+            "type": "boolean",
+            "title": "Billable",
+            "default": true
+          },
+          "rate": {
+            "type": "number",
+            "format": "currency",
+            "title": "Hourly Rate",
+            "minimum": 0,
+            "x-currency": "NOK"
+          },
+          "amount": {
+            "type": "number",
+            "format": "currency",
+            "title": "Amount",
+            "x-calculate": "hours * rate",
+            "x-currency": "NOK"
+          },
+          "description": {
+            "type": "string",
+            "format": "textarea",
+            "title": "Description/Notes"
+          },
+          "overtime_comment": {
+            "type": "string",
+            "format": "textarea",
+            "title": "Overtime Comment"
+          }
+        },
+        "required": [
+          "date",
+          "project",
+          "consultant",
+          "hours"
+        ]
+      },
+      "formLayout": {
+        "groups": [
+          {
+            "label": "Time Entry",
+            "fields": [
+              "date",
+              "project",
+              "consultant",
+              "hours",
+              "billable",
+              "rate",
+              "amount"
+            ],
+            "cols": 2
+          },
+          {
+            "label": "Notes",
+            "fields": [
+              "description",
+              "overtime_comment"
+            ],
+            "cols": 1
+          }
+        ]
+      },
+      "x-rules": [
+        {
+          "when": "billable === false",
+          "set": {
+            "amount": 0
+          }
+        },
+        {
+          "when": "hours <= 7.5",
+          "hide": [
+            "overtime_comment"
+          ]
+        }
+      ],
+      "listFilters": [
+        {
+          "field": "consultant._id",
+          "value": "$loggedOnUser",
+          "label": "My Entries",
+          "active": false
+        },
+        {
+          "field": "date",
+          "value": {
+            "$gte": "$LAST_MONTH_START",
+            "$lte": "$LAST_MONTH_END"
+          },
+          "label": "Last Month",
+          "active": false
+        },
+        {
+          "field": "date",
+          "value": {
+            "$gte": "$MONTH_START",
+            "$lte": "$MONTH_END"
+          },
+          "label": "This Month",
+          "active": false
+        },
+        {
+          "field": "date",
+          "value": {
+            "$gte": "$YEAR_START",
+            "$lte": "$YEAR_END"
+          },
+          "label": "This Year",
+          "active": false
+        }
+      ],
+      "listSummary": [
+        {
+          "field": "hours",
+          "aggregate": "sum"
+        },
+        {
+          "field": "amount",
+          "aggregate": "sum"
+        }
+      ]
+    }
+  },
+  "pages": {
+    "dashboard": {
+      "title": "Dashboard",
+      "icon": "layout-dashboard",
+      "layout": {
+        "cols": 4
+      },
+      "components": [
+        {
+          "type": "stat",
+          "title": "Active Clients",
+          "collection": "clients",
+          "aggregate": "count",
+          "query": {
+            "status": "active"
+          },
+          "width": "1"
+        },
+        {
+          "type": "stat",
+          "title": "Active Projects",
+          "collection": "projects",
+          "aggregate": "count",
+          "query": {
+            "status": "active"
+          },
+          "width": "1"
+        },
+        {
+          "type": "stat",
+          "title": "Active Consultants",
+          "collection": "consultants",
+          "aggregate": "count",
+          "query": {
+            "status": "active"
+          },
+          "width": "1"
+        },
+        {
+          "type": "stat",
+          "title": "This Month's Hours",
+          "collection": "time_entries",
+          "aggregate": "sum",
+          "field": "hours",
+          "query": {
+            "date": {
+              "$gte": "$MONTH_START",
+              "$lte": "$MONTH_END"
+            }
+          },
+          "width": "1"
+        },
+        {
+          "type": "chart",
+          "title": "Billable Amount by Project",
+          "collection": "time_entries",
+          "chartType": "bar",
+          "groupBy": "project",
+          "aggregate": "sum",
+          "field": "amount",
+          "query": {
+            "date": {
+              "$gte": "$MONTH_START",
+              "$lte": "$MONTH_END"
+            }
+          },
+          "width": "2"
+        },
+        {
+          "type": "chart",
+          "title": "Billable Amount by Consultant",
+          "collection": "time_entries",
+          "chartType": "bar",
+          "groupBy": "consultant",
+          "aggregate": "sum",
+          "field": "amount",
+          "query": {
+            "date": {
+              "$gte": "$MONTH_START",
+              "$lte": "$MONTH_END"
+            }
+          },
+          "width": "2"
+        },
+        {
+          "type": "table",
+          "title": "Recent Time Entries",
+          "collection": "time_entries",
+          "columns": [
+            "date",
+            "project",
+            "consultant",
+            "hours",
+            "billable",
+            "amount"
+          ],
+          "sort": {
+            "date": -1
+          },
+          "limit": 10,
+          "width": "4"
+        }
+      ]
+    }
+  },
+  "tours": [
+    {
+      "id": "welcome",
+      "label": "Welcome to Consulting",
+      "trigger": "first-visit",
+      "autoStart": true,
+      "steps": [
+        {
+          "target": "data-assistant",
+          "message": "Hi! I'm Snill, your AI assistant — I'll show you around in 6 quick steps."
+        },
+        {
+          "navigate": "/",
+          "target": "page:dashboard",
+          "message": "Your dashboard shows active clients, projects, consultants, and this month's billable hours."
+        },
+        {
+          "navigate": "/projects",
+          "target": "collection:projects",
+          "message": "All your projects live here — track status, budget, and total billable hours."
+        },
+        {
+          "navigate": "/time_entries",
+          "target": "collection:time_entries",
+          "message": "Log time entries here to track work, hours, and billable amounts per project."
+        },
+        {
+          "target": "collection:time_entries.add",
+          "message": "Click + New to create a time entry.",
+          "action": "click"
+        },
+        {
+          "target": "collection:time_entries.field:date",
+          "message": "Start by selecting the date you worked."
+        },
+        {
+          "target": "data-assistant",
+          "message": "That's it! Ask me anything — 'show me project totals', 'add a consultant', 'what's this month's revenue' — I'm right here to help."
+        }
+      ]
+    },
+    {
+      "id": "log-time-entry",
+      "label": "How to Log a Time Entry",
+      "trigger": "manual",
+      "autoStart": false,
+      "steps": [
+        {
+          "target": "data-assistant",
+          "message": "I'll walk you through logging a time entry in 7 steps."
+        },
+        {
+          "navigate": "/time_entries",
+          "target": "collection:time_entries.add",
+          "message": "Click + New to start a new time entry."
+        },
+        {
+          "target": "collection:time_entries.field:date",
+          "message": "First, pick the date you worked."
+        },
+        {
+          "target": "collection:time_entries.field:project",
+          "message": "Select the project this work is for."
+        },
+        {
+          "target": "collection:time_entries.field:hours",
+          "message": "Enter the number of hours you spent (up to 24)."
+        },
+        {
+          "target": "collection:time_entries.field:rate",
+          "message": "Set your hourly rate for this entry. The amount will calculate automatically."
+        },
+        {
+          "target": "collection:time_entries.field:billable",
+          "message": "Check this if this work should be billed to the client."
+        },
+        {
+          "target": "collection:time_entries.field:description",
+          "message": "Add optional notes about what you worked on."
+        },
+        {
+          "target": "data-assistant",
+          "message": "Done! Save your entry and ask me if you need help — 'show my entries', 'what's my billable total' — I'm here."
+        }
+      ]
+    }
+  ]
+}

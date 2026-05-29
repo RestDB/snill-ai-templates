@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "templates": [
+    {
+      "id": "consulting",
+      "name": "Consulting",
+      "description": "Manage clients, consultants, projects and billable time tracking, with a ready-made dashboard.",
+      "category": "Professional Services",
+      "tags": ["consulting", "time tracking", "billing", "projects"],
+      "icon": "users",
+      "screenshot": "templates/consulting/screenshot.png",
+      "path": "templates/consulting",
+      "collections": ["clients", "consultants", "projects", "time_entries"]
+    }
+  ]
+}
