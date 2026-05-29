@@ -10,7 +10,11 @@
       "icon": "users",
       "screenshot": "templates/consulting/screenshot.png",
       "path": "templates/consulting",
-      "collections": ["clients", "consultants", "projects", "time_entries"]
+      "collections": ["clients", "consultants", "projects", "time_entries"],
+      "author": "snill",
+      "authorUrl": "https://snill.ai",
+      "version": "1.0.0",
+      "updatedAt": "2026-05-29"
     }
   ]
 }
