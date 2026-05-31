@@ -56,6 +56,12 @@
               "page": "billing_report",
               "label": "Billing Report",
               "icon": "receipt"
+            },
+            {
+              "type": "page",
+              "page": "consultant_cv_report",
+              "label": "Consultant CVs",
+              "icon": "file-text"
             }
           ]
         }
@@ -66,12 +72,7 @@
     "icon": "users",
     "roles": [
       "consultant"
-    ],
-    "variables": {
-      "juniorRate": 650,
-      "standardRate": 900,
-      "seniorRate": 1200
-    }
+    ]
   },
   "collections": {
     "consultants": {
@@ -436,11 +437,38 @@
             "x-calculate": "SUM(time_entries.amount)",
             "x-hidden": false,
             "x-currency": "NOK"
+          },
+          "junior_rate": {
+            "type": "number",
+            "format": "currency",
+            "title": "Junior Rate",
+            "minimum": 0,
+            "x-currency": "NOK",
+            "default": 650
+          },
+          "standard_rate": {
+            "type": "number",
+            "format": "currency",
+            "title": "Standard Rate",
+            "minimum": 0,
+            "x-currency": "NOK",
+            "default": 900
+          },
+          "senior_rate": {
+            "type": "number",
+            "format": "currency",
+            "title": "Senior Rate",
+            "minimum": 0,
+            "x-currency": "NOK",
+            "default": 1200
           }
         },
         "required": [
           "name",
-          "client"
+          "client",
+          "junior_rate",
+          "standard_rate",
+          "senior_rate"
         ]
       },
       "formLayout": {
@@ -457,9 +485,12 @@
             "cols": 2
           },
           {
-            "label": "Budget & Tracking",
+            "label": "Budget & Rates",
             "fields": [
               "budget",
+              "junior_rate",
+              "standard_rate",
+              "senior_rate",
               "total_hours",
               "total_billable"
             ],
@@ -483,7 +514,6 @@
             "date",
             "consultant",
             "hours",
-            "rate",
             "description",
             "billable",
             "amount"
@@ -502,6 +532,19 @@
               "aggregate": "sum"
             }
           ]
+        },
+        {
+          "collection": "project_team",
+          "foreignKey": "project._id",
+          "title": "Team",
+          "displayFields": [
+            "consultant",
+            "rate_level"
+          ],
+          "allowCreate": true,
+          "sort": {
+            "consultant.name": 1
+          }
         }
       ],
       "ownerAccess": "own-modify"
@@ -510,15 +553,6 @@
       "label": "Time Entries",
       "singularLabel": "Time Entry",
       "icon": "clock",
-      "listFields": [
-        "date",
-        "project",
-        "consultant",
-        "hours",
-        "billable",
-        "amount",
-        "rate"
-      ],
       "searchFields": [
         "description",
         "project.name",
@@ -582,24 +616,11 @@
             "title": "Billable",
             "default": true
           },
-          "rate": {
-            "type": "string",
-            "title": "Hourly Rate",
-            "enum": [
-              "Junior",
-              "Standard",
-              "Senior"
-            ],
-            "x-linked": {
-              "source": "consultant.hourly_rate",
-              "mode": "initial"
-            }
-          },
           "amount": {
             "type": "number",
             "format": "currency",
             "title": "Amount",
-            "x-calculate": "IF(rate == 'Junior', hours * $juniorRate, IF(rate == 'Standard', hours * $standardRate, hours * $seniorRate))",
+            "x-calculate": "hours * IF(SUM(project_team.rate_level, consultant._id == consultant._id && project_team.project._id == project._id) == 'Junior', project.junior_rate, IF(SUM(project_team.rate_level, consultant._id == consultant._id && project_team.project._id == project._id) == 'Standard', project.standard_rate, project.senior_rate))",
             "x-currency": "NOK"
           },
           "description": {
@@ -630,7 +651,6 @@
               "consultant",
               "hours",
               "billable",
-              "rate",
               "amount"
             ],
             "cols": 2
@@ -704,6 +724,97 @@
           "aggregate": "sum"
         }
       ],
+      "ownerAccess": "own-modify",
+      "listFields": [
+        "date",
+        "project",
+        "consultant",
+        "hours",
+        "billable",
+        "amount"
+      ]
+    },
+    "project_team": {
+      "label": "Project Team",
+      "singularLabel": "Project Team Member",
+      "icon": "users",
+      "listFields": [
+        "consultant",
+        "rate_level",
+        "project"
+      ],
+      "searchFields": [
+        "consultant.name",
+        "project.name"
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "project": {
+            "type": "object",
+            "title": "Project",
+            "properties": {
+              "_id": {
+                "type": "string"
+              }
+            },
+            "x-lookup": {
+              "collection": "projects",
+              "displayField": "name",
+              "searchFields": [
+                "name"
+              ]
+            },
+            "x-writeOnce": true
+          },
+          "consultant": {
+            "type": "object",
+            "title": "Consultant",
+            "properties": {
+              "_id": {
+                "type": "string"
+              }
+            },
+            "x-lookup": {
+              "collection": "consultants",
+              "displayField": "name",
+              "searchFields": [
+                "name",
+                "email"
+              ]
+            },
+            "x-writeOnce": true
+          },
+          "rate_level": {
+            "type": "string",
+            "title": "Rate Level",
+            "enum": [
+              "Junior",
+              "Standard",
+              "Senior"
+            ],
+            "x-default": "Standard"
+          }
+        },
+        "required": [
+          "project",
+          "consultant",
+          "rate_level"
+        ]
+      },
+      "formLayout": {
+        "groups": [
+          {
+            "label": "Team Member",
+            "fields": [
+              "project",
+              "consultant",
+              "rate_level"
+            ],
+            "cols": 2
+          }
+        ]
+      },
       "ownerAccess": "own-modify"
     }
   },
@@ -838,6 +949,43 @@
           "width": "1"
         }
       ]
+    },
+    "consultant_cv_report": {
+      "title": "Consultant CVs",
+      "icon": "file-text",
+      "layout": {
+        "cols": 1
+      },
+      "components": [
+        {
+          "type": "heading",
+          "text": "Consultant Profiles",
+          "subtitle": "Browse consultant CVs and experience",
+          "level": 1,
+          "width": "1"
+        },
+        {
+          "type": "html-template",
+          "title": "Consultant CVs",
+          "collection": "consultants",
+          "template": "<div style=\"display: flex; flex-direction: column; gap: 3rem; padding: 1rem 0;\">{{#each items}}<div style=\"border: 1px solid rgba(0,0,0,0.1); border-radius: 0.5rem; padding: 2rem; background: hsl(var(--card)); box-shadow: 0 1px 3px rgba(0,0,0,0.05);\"><div style=\"display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid rgba(0,0,0,0.08); padding-bottom: 1.5rem;\">{{#if picture}}<img src=\"{{fileUrl picture}}\" alt=\"{{name}}\" style=\"width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(0,0,0,0.1);\">{{/if}}<div style=\"flex: 1;\"><h3 style=\"margin: 0 0 0.25rem 0; font-size: 1.5rem; font-weight: 600; color: hsl(var(--foreground));\">{{name}}</h3><p style=\"margin: 0 0 0.5rem 0; color: hsl(var(--muted-foreground));\">{{status}}</p><p style=\"margin: 0; font-size: 0.875rem; color: hsl(var(--muted-foreground));\">{{email}}</p>{{#if phone}}<p style=\"margin: 0.25rem 0 0 0; font-size: 0.875rem; color: hsl(var(--muted-foreground));\">{{phone}}</p>{{/if}}</div></div>{{#if hourly_rate}}<div style=\"margin-bottom: 1.5rem;\"><p style=\"margin: 0 0 0.75rem 0; font-size: 1rem; font-weight: 700; color: hsl(var(--foreground));\">Rate Level</p><p style=\"margin: 0; font-size: 1rem; color: hsl(var(--primary));\">{{hourly_rate}}</p></div>{{/if}}{{#if introduction}}<div style=\"margin-bottom: 1.5rem;\"><p style=\"margin: 0 0 0.75rem 0; font-size: 1rem; font-weight: 700; color: hsl(var(--foreground));\">About</p><div style=\"font-size: 0.875rem; line-height: 1.6; color: hsl(var(--foreground));\">{{md introduction}}</div></div>{{/if}}{{#if education}}<div style=\"margin-bottom: 1.5rem;\"><p style=\"margin: 0 0 0.75rem 0; font-size: 1rem; font-weight: 700; color: hsl(var(--foreground));\">Education</p><div style=\"font-size: 0.875rem; line-height: 1.6; color: hsl(var(--foreground));\">{{md education}}</div></div>{{/if}}{{#if experience}}<div style=\"margin-bottom: 1.5rem;\"><p style=\"margin: 0 0 0.75rem 0; font-size: 1rem; font-weight: 700; color: hsl(var(--foreground));\">Experience</p><div style=\"font-size: 0.875rem; line-height: 1.6; color: hsl(var(--foreground));\">{{md experience}}</div></div>{{/if}}{{#if skills}}<div style=\"margin-bottom: 1.5rem;\"><p style=\"margin: 0 0 0.75rem 0; font-size: 1rem; font-weight: 700; color: hsl(var(--foreground));\">Skills</p><div style=\"font-size: 0.875rem; line-height: 1.6; color: hsl(var(--foreground));\">{{md skills}}</div></div>{{/if}}</div>{{/each}}</div>",
+          "width": "1",
+          "query": {
+            "name": {
+              "$regex": "$param.consultantName",
+              "$options": "i"
+            }
+          }
+        }
+      ],
+      "params": [
+        {
+          "key": "consultantName",
+          "type": "text",
+          "label": "Consultant Name",
+          "default": ""
+        }
+      ]
     }
   },
   "tours": [
@@ -909,7 +1057,7 @@
           "message": "Enter the number of hours you spent (up to 24)."
         },
         {
-          "target": "collection:time_entries.field:rate",
+          "target": "collection:time_entries.field:hours",
           "message": "Set your hourly rate for this entry. The amount will calculate automatically."
         },
         {
