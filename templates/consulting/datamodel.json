@@ -56,7 +56,12 @@
     "icon": "users",
     "roles": [
       "consultant"
-    ]
+    ],
+    "variables": {
+      "juniorRate": 650,
+      "standardRate": 900,
+      "seniorRate": 1200
+    }
   },
   "collections": {
     "consultants": {
@@ -67,7 +72,8 @@
         "name",
         "email",
         "phone",
-        "status"
+        "status",
+        "hourly_rate"
       ],
       "searchFields": [
         "name",
@@ -102,16 +108,56 @@
             "x-default": "active"
           },
           "hourly_rate": {
-            "type": "number",
-            "format": "currency",
-            "title": "Default Hourly Rate",
-            "minimum": 0,
-            "x-currency": "NOK"
+            "type": "string",
+            "title": "Hourly Rate",
+            "enum": [
+              "Junior",
+              "Standard",
+              "Senior"
+            ],
+            "x-default": "Standard"
           },
           "skills": {
             "type": "string",
             "format": "textarea",
             "title": "Skills / Bio"
+          },
+          "employee": {
+            "type": "object",
+            "title": "Employee",
+            "properties": {
+              "_id": {
+                "type": "string"
+              }
+            },
+            "x-lookup": {
+              "collection": "$users",
+              "displayField": "name",
+              "searchFields": [
+                "name",
+                "email"
+              ]
+            }
+          },
+          "picture": {
+            "type": "string",
+            "format": "image",
+            "title": "Picture"
+          },
+          "introduction": {
+            "type": "string",
+            "format": "textarea",
+            "title": "Introduction"
+          },
+          "education": {
+            "type": "string",
+            "format": "textarea",
+            "title": "Education"
+          },
+          "experience": {
+            "type": "string",
+            "format": "textarea",
+            "title": "Experience"
           }
         },
         "required": [
@@ -127,7 +173,8 @@
               "email",
               "phone",
               "status",
-              "hourly_rate"
+              "hourly_rate",
+              "employee"
             ],
             "cols": 2
           },
@@ -137,6 +184,26 @@
               "skills"
             ],
             "cols": 1
+          },
+          {
+            "label": "CV - Résumé",
+            "collapsible": true,
+            "collapsed": true,
+            "fields": [
+              "picture",
+              {
+                "field": "introduction",
+                "cols": 4
+              },
+              {
+                "field": "education",
+                "cols": 4
+              },
+              {
+                "field": "experience",
+                "cols": 4
+              }
+            ]
           }
         ]
       },
@@ -208,13 +275,6 @@
             ],
             "x-default": "active"
           },
-          "hourly_rate": {
-            "type": "number",
-            "format": "currency",
-            "title": "Default Hourly Rate",
-            "minimum": 0,
-            "x-currency": "NOK"
-          },
           "notes": {
             "type": "string",
             "format": "textarea",
@@ -242,7 +302,6 @@
             "label": "Details",
             "fields": [
               "address",
-              "hourly_rate",
               "notes"
             ],
             "cols": 1
@@ -402,7 +461,8 @@
             "hours",
             "rate",
             "description",
-            "billable"
+            "billable",
+            "amount"
           ],
           "allowCreate": true,
           "sort": {
@@ -411,10 +471,6 @@
           "listSummary": [
             {
               "field": "hours",
-              "aggregate": "sum"
-            },
-            {
-              "field": "rate",
               "aggregate": "sum"
             },
             {
@@ -435,7 +491,8 @@
         "consultant",
         "hours",
         "billable",
-        "amount"
+        "amount",
+        "rate"
       ],
       "searchFields": [
         "description",
@@ -480,14 +537,14 @@
               }
             },
             "x-lookup": {
-              "collection": "$users",
+              "collection": "consultants",
               "displayField": "name",
               "searchFields": [
                 "name",
                 "email"
               ]
             },
-            "x-default": "$loggedOnUser"
+            "default": null
           },
           "hours": {
             "type": "number",
@@ -501,17 +558,23 @@
             "default": true
           },
           "rate": {
-            "type": "number",
-            "format": "currency",
+            "type": "string",
             "title": "Hourly Rate",
-            "minimum": 0,
-            "x-currency": "NOK"
+            "enum": [
+              "Junior",
+              "Standard",
+              "Senior"
+            ],
+            "x-linked": {
+              "source": "consultant.hourly_rate",
+              "mode": "initial"
+            }
           },
           "amount": {
             "type": "number",
             "format": "currency",
             "title": "Amount",
-            "x-calculate": "hours * rate",
+            "x-calculate": "IF(rate == 'Junior', hours * $juniorRate, IF(rate == 'Standard', hours * $standardRate, hours * $seniorRate))",
             "x-currency": "NOK"
           },
           "description": {
