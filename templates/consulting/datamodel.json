@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Consulting",
+    "title": "Consulting 2.0",
     "subtitle": "Client & Project Management",
     "sidebar": {
       "groups": [
@@ -244,7 +244,8 @@
             "date": -1
           }
         }
-      ]
+      ],
+      "ownerAccess": "own-modify"
     },
     "clients": {
       "label": "Clients",
@@ -345,7 +346,8 @@
             "start_date": -1
           }
         }
-      ]
+      ],
+      "ownerAccess": "own-modify"
     },
     "projects": {
       "label": "Projects",
@@ -501,7 +503,8 @@
             }
           ]
         }
-      ]
+      ],
+      "ownerAccess": "own-modify"
     },
     "time_entries": {
       "label": "Time Entries",
