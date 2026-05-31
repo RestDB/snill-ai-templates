@@ -703,7 +703,8 @@
           "field": "amount",
           "aggregate": "sum"
         }
-      ]
+      ],
+      "ownerAccess": "own-modify"
     }
   },
   "pages": {
