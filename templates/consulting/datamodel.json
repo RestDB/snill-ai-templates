@@ -620,7 +620,7 @@
             "type": "number",
             "format": "currency",
             "title": "Amount",
-            "x-calculate": "hours * IF(SUM(project_team.rate_level, consultant._id == consultant._id && project_team.project._id == project._id) == 'Junior', project.junior_rate, IF(SUM(project_team.rate_level, consultant._id == consultant._id && project_team.project._id == project._id) == 'Standard', project.standard_rate, project.senior_rate))",
+            "x-calculate": "hours * IF(consultant.hourly_rate == 'Junior', project.junior_rate, IF(consultant.hourly_rate == 'Standard', project.standard_rate, project.senior_rate))",
             "x-currency": "NOK"
           },
           "description": {
