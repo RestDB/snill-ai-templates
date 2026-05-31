@@ -44,8 +44,18 @@
             {
               "type": "collection",
               "collection": "time_entries",
-              "label": "Time Entries",
               "icon": "clock"
+            }
+          ]
+        },
+        {
+          "label": "Reports",
+          "items": [
+            {
+              "type": "page",
+              "page": "billing_report",
+              "label": "Billing Report",
+              "icon": "receipt"
             }
           ]
         }
@@ -158,6 +168,14 @@
             "type": "string",
             "format": "textarea",
             "title": "Experience"
+          },
+          "cv_documents": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "file"
+            },
+            "title": "CV Documents"
           }
         },
         "required": [
@@ -201,6 +219,10 @@
               },
               {
                 "field": "experience",
+                "cols": 4
+              },
+              {
+                "field": "cv_documents",
                 "cols": 4
               }
             ]
@@ -782,6 +804,34 @@
           },
           "limit": 10,
           "width": "4"
+        }
+      ]
+    },
+    "billing_report": {
+      "title": "Billing Report",
+      "icon": "receipt",
+      "layout": {
+        "cols": 1
+      },
+      "components": [
+        {
+          "type": "grouped-table",
+          "title": "Billable Hours & Revenue by Client, Project & Consultant",
+          "collection": "time_entries",
+          "query": {
+            "billable": true
+          },
+          "groupBy": [
+            "project.client.name",
+            "project.name",
+            "consultant.name"
+          ],
+          "columns": [
+            "hours",
+            "amount"
+          ],
+          "showGrandTotal": true,
+          "width": "1"
         }
       ]
     }
