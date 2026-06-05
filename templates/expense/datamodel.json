@@ -1,0 +1,653 @@
+{
+  "app": {
+    "title": "Expense",
+    "subtitle": "Employee expense tracking and approval",
+    "icon": "receipt",
+    "iconColor": "#3B82F6",
+    "sidebar": {
+      "groups": [
+        {
+          "label": "Navigation",
+          "items": [
+            {
+              "type": "button",
+              "label": "New Expense",
+              "action": "create",
+              "collection": "expenses",
+              "icon": "plus"
+            },
+            {
+              "type": "button",
+              "label": "New Expense Item",
+              "action": "create",
+              "collection": "expense_items",
+              "icon": "receipt"
+            }
+          ]
+        },
+        {
+          "label": "Expenses",
+          "items": [
+            {
+              "type": "collection",
+              "collection": "expenses",
+              "label": "Expenses"
+            },
+            {
+              "type": "collection",
+              "collection": "expense_items",
+              "label": "Expense Items"
+            }
+          ]
+        }
+      ]
+    },
+    "startPage": "dashboard",
+    "variables": {
+      "currency": "EUR"
+    },
+    "roles": [
+      "manager",
+      "user"
+    ]
+  },
+  "collections": {
+    "expenses": {
+      "label": "Expenses",
+      "singularLabel": "Expense",
+      "icon": "receipt",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "employee": {
+            "type": "object",
+            "title": "Employee",
+            "x-lookup": {
+              "collection": "$users",
+              "displayField": "name",
+              "searchFields": [
+                "name",
+                "email"
+              ]
+            },
+            "x-default": "$loggedOnUser",
+            "x-writeOnce": true
+          },
+          "description": {
+            "type": "string",
+            "format": "textarea",
+            "title": "Description"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "enum": [
+              "draft",
+              "submitted",
+              "approved",
+              "rejected",
+              "paid"
+            ],
+            "x-default": "draft",
+            "x-transitions": {
+              "draft": {
+                "submitted": [
+                  "user",
+                  "manager"
+                ]
+              },
+              "submitted": {
+                "approved": [
+                  "manager"
+                ],
+                "rejected": [
+                  "manager"
+                ],
+                "draft": [
+                  "user",
+                  "manager"
+                ]
+              },
+              "approved": {
+                "paid": [
+                  "manager"
+                ]
+              },
+              "rejected": {
+                "draft": [
+                  "user"
+                ]
+              }
+            }
+          },
+          "amount": {
+            "type": "number",
+            "format": "currency",
+            "x-currency": "EUR",
+            "title": "Total Amount",
+            "x-calculate": "SUM(expense_items.amount)"
+          },
+          "expense_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Expense Date"
+          },
+          "submitted_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Submitted At"
+          },
+          "approved_by": {
+            "type": "object",
+            "title": "Approved By",
+            "x-lookup": {
+              "collection": "$users",
+              "displayField": "name",
+              "searchFields": [
+                "name",
+                "email"
+              ],
+              "query": {
+                "role": "manager"
+              }
+            },
+            "roleAccess": {
+              "read": [
+                "user",
+                "manager"
+              ]
+            },
+            "x-props": {
+              "roleFilter": "manager"
+            }
+          },
+          "approved_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Approved At",
+            "roleAccess": {
+              "read": [
+                "manager",
+                "user"
+              ],
+              "modify": [
+                "manager"
+              ]
+            }
+          },
+          "notes": {
+            "type": "string",
+            "format": "textarea",
+            "title": "Manager Notes"
+          }
+        },
+        "required": [
+          "title",
+          "employee",
+          "expense_date",
+          "approved_by"
+        ]
+      },
+      "listFields": [
+        "title",
+        "employee",
+        "status",
+        "amount",
+        "expense_date"
+      ],
+      "searchFields": [
+        "title",
+        "description",
+        "employee.name"
+      ],
+      "listFilters": [
+        {
+          "field": "status",
+          "value": "draft",
+          "label": "Draft",
+          "active": false
+        },
+        {
+          "field": "status",
+          "value": "submitted",
+          "label": "Submitted",
+          "active": true
+        },
+        {
+          "field": "status",
+          "value": "approved",
+          "label": "Approved",
+          "active": false
+        },
+        {
+          "field": "status",
+          "value": "rejected",
+          "label": "Rejected",
+          "active": false
+        }
+      ],
+      "listSummary": [
+        {
+          "field": "amount",
+          "aggregate": "sum"
+        }
+      ],
+      "relatedCollections": [
+        {
+          "collection": "expense_items",
+          "foreignKey": "expense._id",
+          "title": "Expense Items",
+          "displayFields": [
+            "category",
+            "description",
+            "amount",
+            "expense",
+            "expense_date",
+            "attachment"
+          ],
+          "allowCreate": true,
+          "sort": {
+            "created_at": -1
+          },
+          "sortable": true,
+          "listSummary": [
+            {
+              "field": "amount",
+              "aggregate": "sum"
+            },
+            {
+              "field": "category",
+              "aggregate": "count"
+            }
+          ]
+        }
+      ],
+      "formLayout": {
+        "groups": [
+          {
+            "label": "Basic Information",
+            "cols": 2,
+            "fields": [
+              "title",
+              "employee",
+              {
+                "field": "approved_by",
+                "cols": 1
+              },
+              "expense_date",
+              {
+                "field": "description",
+                "cols": 2
+              }
+            ]
+          },
+          {
+            "label": "Status & Approval",
+            "cols": 2,
+            "collapsible": true,
+            "collapsed": true,
+            "fields": [
+              {
+                "field": "status",
+                "cols": 1
+              },
+              {
+                "field": "amount",
+                "cols": 1
+              },
+              {
+                "field": "approved_at",
+                "cols": 1
+              },
+              {
+                "field": "notes",
+                "cols": 1
+              },
+              "submitted_at"
+            ]
+          }
+        ]
+      },
+      "x-rules": [
+        {
+          "when": "status === 'approved' && _prev.status !== 'approved'",
+          "set": {
+            "approved_by": "$USER",
+            "approved_at": "$NOW"
+          }
+        }
+      ],
+      "triggers": [
+        {
+          "name": "Notify on Approval",
+          "on": "update",
+          "when": "status === 'approved' && _prev.status === 'submitted'",
+          "notify": {
+            "to": "employee",
+            "subject": "Your expense has been approved",
+            "body": "Your expense $(title) for $(amount) has been approved by the manager"
+          }
+        },
+        {
+          "name": "Notify on Rejection",
+          "on": "update",
+          "when": "status === 'rejected' && _prev.status === 'submitted'",
+          "notify": {
+            "to": "employee",
+            "subject": "Your expense has been declined",
+            "body": "Your expense $(title) for $(amount) has been declined by the manager"
+          }
+        },
+        {
+          "name": "Notify on Payment",
+          "on": "update",
+          "when": "status === 'paid' && _prev.status === 'approved'",
+          "notify": {
+            "to": "employee",
+            "subject": "Your expense has been paid",
+            "body": "Your expense $(title) for $(amount) has been paid."
+          }
+        },
+        {
+          "name": "Notify Manager on Submission",
+          "on": "update",
+          "when": "status === 'submitted' && _prev.status === 'draft'",
+          "notify": {
+            "to": "approved_by",
+            "subject": "New expense awaiting approval: $(title)",
+            "body": "Employee $(employee.name) has submitted an expense claim: $(title) for $(amount).- \nPlease review and approve or reject."
+          }
+        }
+      ],
+      "ownerAccess": "own",
+      "ownerAccessExempt": [
+        "manager"
+      ]
+    },
+    "expense_items": {
+      "label": "Expense Items",
+      "singularLabel": "Expense Item",
+      "icon": "shopping-bag",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "expense": {
+            "type": "object",
+            "title": "Expense",
+            "x-lookup": {
+              "collection": "expenses",
+              "displayField": "title",
+              "searchFields": [
+                "title",
+                "description"
+              ]
+            },
+            "x-writeOnce": true,
+            "x-lookupValidation": {
+              "condition": "status === 'draft'",
+              "message": "Cannot add items to expenses that have been submitted"
+            }
+          },
+          "category": {
+            "type": "string",
+            "title": "Category",
+            "enum": [
+              "flight",
+              "accommodation",
+              "food",
+              "transportation",
+              "other"
+            ]
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "format": "textarea"
+          },
+          "amount": {
+            "type": "number",
+            "format": "currency",
+            "x-currency": "EUR",
+            "title": "Amount"
+          },
+          "expense_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Expense Item Date"
+          },
+          "attachment": {
+            "type": "string",
+            "format": "file",
+            "title": "Receipt/Attachment",
+            "x-accept": ".pdf,.jpg,.jpeg,.png,.doc,.docx"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "x-default": "$datetime",
+            "x-hidden": true
+          }
+        },
+        "required": [
+          "expense",
+          "category",
+          "amount",
+          "attachment"
+        ]
+      },
+      "listFields": [
+        "category",
+        "description",
+        "amount",
+        "attachment"
+      ],
+      "searchFields": [
+        "category",
+        "description"
+      ],
+      "formLayout": {
+        "groups": [
+          {
+            "label": "Item Details",
+            "cols": 2,
+            "fields": [
+              "expense",
+              "category",
+              "amount",
+              "expense_date",
+              "description",
+              "attachment"
+            ]
+          }
+        ]
+      },
+      "ownerAccess": "own",
+      "listSummary": [
+        {
+          "field": "amount",
+          "aggregate": "sum"
+        }
+      ],
+      "inlineEdit": true,
+      "ownerAccessExempt": [
+        "manager"
+      ],
+      "allowBulkEdit": true
+    }
+  },
+  "pages": {
+    "dashboard": {
+      "title": "Dashboard",
+      "icon": "layout-dashboard",
+      "layout": {
+        "cols": 4
+      },
+      "components": [
+        {
+          "group": "Overview",
+          "cols": 4,
+          "components": [
+            {
+              "type": "stat",
+              "title": "My Total Expenses",
+              "collection": "expenses",
+              "aggregate": "sum",
+              "field": "amount",
+              "width": "1"
+            },
+            {
+              "type": "stat",
+              "title": "Pending Approval",
+              "collection": "expenses",
+              "aggregate": "count",
+              "query": {
+                "status": "submitted"
+              },
+              "width": "1"
+            },
+            {
+              "type": "stat",
+              "title": "Approved Expenses",
+              "collection": "expenses",
+              "aggregate": "count",
+              "query": {
+                "status": "approved"
+              },
+              "width": "1"
+            },
+            {
+              "type": "stat",
+              "title": "Rejected Expenses",
+              "collection": "expenses",
+              "aggregate": "count",
+              "query": {
+                "status": "rejected"
+              },
+              "width": "1"
+            }
+          ]
+        },
+        {
+          "group": "Expenses by Status",
+          "cols": 4,
+          "components": [
+            {
+              "type": "chart",
+              "title": "Expenses by Status",
+              "collection": "expenses",
+              "chartType": "bar",
+              "groupBy": "status",
+              "width": "2"
+            },
+            {
+              "type": "chart",
+              "title": "Top Categories",
+              "collection": "expense_items",
+              "chartType": "pie",
+              "groupBy": "category",
+              "width": "2"
+            }
+          ]
+        },
+        {
+          "group": "Recent Activity",
+          "cols": 4,
+          "components": [
+            {
+              "type": "table",
+              "title": "Recent Expenses",
+              "collection": "expenses",
+              "columns": [
+                "title",
+                "expense_date",
+                "amount",
+                "status"
+              ],
+              "sort": {
+                "expense_date": -1
+              },
+              "limit": 10,
+              "width": "4"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "tours": [
+    {
+      "id": "intro",
+      "label": "Welcome to Expense",
+      "trigger": "first-visit",
+      "autoStart": true,
+      "steps": [
+        {
+          "target": "data-assistant",
+          "message": "I'm Snill, your AI assistant — I'll show you around in 5 quick steps."
+        },
+        {
+          "navigate": "/page/dashboard",
+          "target": "page:dashboard",
+          "message": "Your dashboard shows expense stats and recent activity."
+        },
+        {
+          "navigate": "/expenses",
+          "target": "collection:expenses",
+          "message": "Your expenses live here. Create, edit, and submit them for approval."
+        },
+        {
+          "target": "collection:expenses.add",
+          "message": "Click + New to create an expense.",
+          "action": "click"
+        },
+        {
+          "target": "collection:expenses.field:title",
+          "message": "Start by giving it a title — e.g. 'Q2 Conference Trip'."
+        },
+        {
+          "target": "data-assistant",
+          "message": "That's it! Ask me anything — 'show recent expenses', 'what's pending approval' — I'm right here."
+        }
+      ]
+    },
+    {
+      "id": "submit-expense",
+      "label": "Submit Your First Expense",
+      "trigger": "manual",
+      "autoStart": false,
+      "steps": [
+        {
+          "target": "data-assistant",
+          "message": "I'll walk you through submitting an expense in 5 steps."
+        },
+        {
+          "navigate": "/expenses",
+          "target": "collection:expenses",
+          "message": "All your expenses are tracked here — drafts, submissions, and approvals."
+        },
+        {
+          "target": "collection:expenses.add",
+          "message": "Click + New Expense to start a new submission.",
+          "action": "click"
+        },
+        {
+          "target": "collection:expenses.field:title",
+          "message": "Give your expense a clear title, like 'Client Meeting - NYC Trip'."
+        },
+        {
+          "target": "collection:expenses.field:expense_date",
+          "message": "Set the date when you incurred the expense."
+        },
+        {
+          "target": "data-assistant",
+          "message": "You'll add line items for each cost, then submit for approval. Ask me for help anytime!"
+        }
+      ]
+    }
+  ]
+}

@@ -15,6 +15,21 @@
       "authorUrl": "https://snill.ai",
       "version": "1.0.0",
       "updatedAt": "2026-05-29"
+    },
+    {
+      "id": "expense",
+      "name": "Expense",
+      "description": "Employee expense tracking and approval, with expense items, receipt attachments and a ready-made dashboard.",
+      "category": "Finance",
+      "tags": ["expenses", "approval", "receipts", "finance"],
+      "icon": "receipt",
+      "screenshot": "templates/expense/screenshot.png",
+      "path": "templates/expense",
+      "collections": ["expenses", "expense_items"],
+      "author": "snill",
+      "authorUrl": "https://snill.ai",
+      "version": "1.0.0",
+      "updatedAt": "2026-06-05"
     }
   ]
 }
