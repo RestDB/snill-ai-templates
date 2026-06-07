@@ -1655,7 +1655,7 @@ Expected: PASS.
 - [ ] **Step 7: Verify the composition list loads in Studio**
 
 Run: `npm run studio`
-Expected: Remotion Studio opens; left panel lists `expense-intro@1x1`, `expense-intro@9x16`, `expense-intro@16x9`. Scrub each — placeholder rectangles with captions/zoom/spotlight/callout/cards animate. Close Studio (Ctrl-C).
+Expected: Remotion Studio opens; left panel lists `expense-intro-1x1`, `expense-intro-9x16`, `expense-intro-16x9`. Scrub each — placeholder rectangles with captions/zoom/spotlight/callout/cards animate. Close Studio (Ctrl-C).
 
 - [ ] **Step 8: Commit**
 
@@ -1736,7 +1736,9 @@ async function main() {
   const serveUrl = await bundle({ entryPoint: path.join(process.cwd(), "src/index.ts") });
 
   for (const size of sizes) {
-    const id = `${clipName}@${size.id}`;
+    // Separator is "-" not "@": Remotion's validateCompositionId rejects "@".
+    // Must match the id format in src/registry.ts (`${name}-${size.id}`).
+    const id = `${clipName}-${size.id}`;
     const composition = await selectComposition({ serveUrl, id });
 
     const mp4 = path.join("out", `${clipName}.${size.id}.mp4`);
@@ -1782,7 +1784,7 @@ git commit -m "feat: render CLI for multi-size mp4/gif output"
 **Files:**
 - Create: `snill-clips/tests/snapshot/snapshot.test.ts`
 
-> Renders a few key frames of `expense-intro@1x1` via `renderStill` and asserts the output PNG is byte-stable against a committed reference. Catches kit/layout regressions. First run generates references; subsequent runs compare.
+> Renders a few key frames of `expense-intro-1x1` via `renderStill` and asserts the output PNG is byte-stable against a committed reference. Catches kit/layout regressions. First run generates references; subsequent runs compare.
 
 - [ ] **Step 1: Implement `tests/snapshot/snapshot.test.ts`**
 
@@ -1805,10 +1807,10 @@ beforeAll(async () => {
   serveUrl = await bundle({ entryPoint: path.join(process.cwd(), "src/index.ts") });
 }, 120_000);
 
-describe("expense-intro@1x1 frames", () => {
+describe("expense-intro-1x1 frames", () => {
   for (const frame of FRAMES) {
     it(`frame ${frame} matches reference`, async () => {
-      const composition = await selectComposition({ serveUrl, id: "expense-intro@1x1" });
+      const composition = await selectComposition({ serveUrl, id: "expense-intro-1x1" });
       const outPath = path.join(OUT, `f${frame}.png`);
       await renderStill({ composition, serveUrl, frame, output: outPath, imageFormat: "png" });
 
