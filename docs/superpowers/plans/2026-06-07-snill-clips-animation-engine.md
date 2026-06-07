@@ -280,17 +280,17 @@ describe("buildRegistry", () => {
   it("creates one composition per clip per size", () => {
     const comps = buildRegistry([{ name: "demo", component: Dummy, durationInSeconds: 2 }]);
     expect(comps).toHaveLength(3);
-    expect(comps.map((c) => c.id).sort()).toEqual(["demo@16x9", "demo@1x1", "demo@9x16"].sort());
+    expect(comps.map((c) => c.id).sort()).toEqual(["demo-16x9", "demo-1x1", "demo-9x16"].sort());
   });
 
   it("computes durationInFrames from seconds × fps", () => {
     const comps = buildRegistry([{ name: "demo", component: Dummy, durationInSeconds: 2 }]);
-    expect(comps.find((c) => c.id === "demo@1x1")!.durationInFrames).toBe(60);
+    expect(comps.find((c) => c.id === "demo-1x1")!.durationInFrames).toBe(60);
   });
 
   it("carries width/height/fps from the size preset", () => {
     const comps = buildRegistry([{ name: "demo", component: Dummy, durationInSeconds: 2 }]);
-    const vertical = comps.find((c) => c.id === "demo@9x16")!;
+    const vertical = comps.find((c) => c.id === "demo-9x16")!;
     expect([vertical.width, vertical.height, vertical.fps]).toEqual([1080, 1920, 30]);
   });
 });
@@ -325,7 +325,7 @@ export interface CompDescriptor {
 export function buildRegistry(clips: ClipModule[], sizes: SizePreset[] = SIZE_LIST): CompDescriptor[] {
   return clips.flatMap((clip) =>
     sizes.map((size) => ({
-      id: `${clip.name}@${size.id}`,
+      id: `${clip.name}-${size.id}`,
       component: clip.component,
       width: size.width,
       height: size.height,
