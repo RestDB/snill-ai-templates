@@ -1,11 +1,14 @@
-# snill.ai templates
+# Snapps — snill.ai templates
 
-Starter templates for [snill.ai](https://snill.ai). When a user creates a new app,
-snill fetches the gallery from this repo and lets them pick a template to start from.
+**Snapps** (Snill apps) are ready-made, tested snill apps. Each one is a complete,
+working application you can **use as-is**, or treat as a **starting point** for building
+your own customized solution. This repo is the library of Snapps that powers
+[snill.ai](https://snill.ai): when a user creates a new app, snill fetches the gallery
+from here and lets them pick a Snapp to start from.
 
 A snill app is fully defined by a single `datamodel.json` (the app shell, its
 collections, pages and tours). The application code is identical across every app —
-only the data model differs. So a template here **is** a curated `datamodel.json`.
+only the data model differs. So a Snapp (template) here **is** a curated `datamodel.json`.
 
 ## How snill uses this repo
 
