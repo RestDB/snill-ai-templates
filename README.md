@@ -19,7 +19,16 @@ snill's backend exposes a templates API that reads from this repo on GitHub:
 2. When the user selects a template, it fetches that template's
    `templates/<id>/datamodel.json` and uses it to seed the new app.
 
-No build or publish step is involved — **pushing to this repo updates the gallery.**
+No build or publish step is involved — **merging a PR to this repo updates the gallery.**
+
+## Using a Snapp directly
+
+You don't have to start a new app from the picker. Because a Snapp is just a
+`datamodel.json`, you can **copy the contents of any template's `datamodel.json` straight
+into an existing Snill app** using the built-in schema editor — paste it in and the app
+adopts the Snapp's collections, pages and tours. Handy for adding a tested Snapp to an
+app you've already started, or for cherry-picking a Snapp as a starting point and
+customizing from there.
 
 ## Repository layout
 
@@ -73,7 +82,11 @@ A single, hand-edited file listing every template:
 
 Paths are repo-relative; the snill backend resolves them to raw GitHub URLs.
 
-## Adding a template
+## Contributing a Snapp
+
+**We welcome pull requests for new Snapps.** The Snapps library is meant to grow with
+community contributions — if you've built a clean, reusable app, share it here. `main` is
+protected, so all changes (ours included) go through a PR.
 
 1. Create a folder `templates/<id>/`.
 2. Add `datamodel.json` — a complete, valid snill data model (`app`, `collections`,
