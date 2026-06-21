@@ -1,0 +1,784 @@
+{
+  "app": {
+    "title": "Contracts",
+    "icon": "files",
+    "iconColor": "#615981",
+    "sidebar": {
+      "groups": [
+        {
+          "label": "Dashboard",
+          "items": [
+            {
+              "type": "page",
+              "page": "dashboard",
+              "label": "Dashboard",
+              "icon": "layout-dashboard"
+            }
+          ]
+        },
+        {
+          "label": "Contracts",
+          "items": [
+            {
+              "type": "collection",
+              "collection": "contracts",
+              "label": "Contracts"
+            },
+            {
+              "type": "collection",
+              "collection": "vendors",
+              "label": "Vendors"
+            }
+          ]
+        },
+        {
+          "label": "Audit & Activity",
+          "items": [
+            {
+              "type": "collection",
+              "collection": "contract_events",
+              "label": "Contract Events"
+            },
+            {
+              "type": "activity",
+              "label": "Activity Log"
+            }
+          ]
+        }
+      ]
+    },
+    "startPage": "dashboard",
+    "subtitle": "Contracts and Compliance",
+    "theme": "whatsapp",
+    "roles": [
+      "admin",
+      "legal",
+      "finance"
+    ]
+  },
+  "collections": {
+    "vendors": {
+      "label": "Vendors",
+      "singularLabel": "Vendor",
+      "icon": "building",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Vendor Name"
+          },
+          "org_no": {
+            "type": "string",
+            "title": "Organization Number"
+          },
+          "contact_name": {
+            "type": "string",
+            "title": "Primary Contact"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "category": {
+            "type": "string",
+            "title": "Category",
+            "enum": [
+              "service_provider",
+              "software",
+              "insurance",
+              "facility",
+              "other"
+            ]
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "listFields": [
+        "name",
+        "contact_name",
+        "email",
+        "category"
+      ],
+      "searchFields": [
+        "name",
+        "contact_name",
+        "email",
+        "org_no"
+      ],
+      "showReferences": true,
+      "referencesLabel": "Contracts with this vendor"
+    },
+    "contracts": {
+      "label": "Contracts",
+      "singularLabel": "Contract",
+      "icon": "file-text",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Contract Title"
+          },
+          "vendor": {
+            "type": "object",
+            "title": "Vendor",
+            "x-lookup": {
+              "collection": "vendors",
+              "displayField": "name",
+              "searchFields": [
+                "name",
+                "contact_name"
+              ]
+            },
+            "x-writeOnce": true
+          },
+          "category": {
+            "type": "string",
+            "title": "Category",
+            "enum": [
+              "lease",
+              "saas",
+              "service",
+              "insurance",
+              "employment",
+              "other"
+            ],
+            "x-writeOnce": true
+          },
+          "owner": {
+            "type": "object",
+            "title": "Contract Owner",
+            "x-lookup": {
+              "collection": "$users",
+              "displayField": "name",
+              "searchFields": [
+                "name",
+                "email"
+              ]
+            },
+            "x-default": "$loggedOnUser",
+            "x-writeOnce": true
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "enum": [
+              "draft",
+              "active",
+              "renewed",
+              "terminated",
+              "expired",
+              "archived"
+            ],
+            "x-default": "draft",
+            "x-transitions": {
+              "draft": {
+                "active": [
+                  "admin",
+                  "legal",
+                  "finance"
+                ]
+              },
+              "active": {
+                "renewed": [
+                  "legal",
+                  "finance"
+                ],
+                "terminated": [
+                  "legal",
+                  "finance"
+                ],
+                "expired": [
+                  "admin"
+                ]
+              },
+              "renewed": {
+                "active": [
+                  "legal",
+                  "finance"
+                ],
+                "archived": [
+                  "legal",
+                  "finance"
+                ]
+              },
+              "terminated": {
+                "archived": [
+                  "legal",
+                  "finance"
+                ]
+              },
+              "expired": {
+                "archived": [
+                  "legal",
+                  "finance"
+                ]
+              }
+            }
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Start Date",
+            "x-writeOnce": true
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date",
+            "title": "End Date",
+            "x-writeOnce": true
+          },
+          "renewal_type": {
+            "type": "string",
+            "title": "Renewal Type",
+            "enum": [
+              "auto",
+              "manual",
+              "none"
+            ],
+            "x-default": "manual"
+          },
+          "notice_period_days": {
+            "type": "integer",
+            "title": "Notice Period (days)",
+            "minimum": 0,
+            "default": 30
+          },
+          "annual_value": {
+            "type": "number",
+            "format": "currency",
+            "title": "Annual Value",
+            "x-currency": "USD"
+          },
+          "currency": {
+            "type": "string",
+            "title": "Currency",
+            "enum": [
+              "USD",
+              "EUR",
+              "GBP",
+              "NOK",
+              "SEK",
+              "JPY"
+            ],
+            "x-default": "USD"
+          },
+          "payment_terms": {
+            "type": "string",
+            "title": "Payment Terms"
+          },
+          "document": {
+            "type": "string",
+            "format": "file",
+            "title": "Contract Document"
+          },
+          "description": {
+            "type": "string",
+            "format": "textarea",
+            "title": "Description"
+          },
+          "notice_deadline": {
+            "type": "string",
+            "format": "date",
+            "title": "Notice Deadline",
+            "x-calculate": "IF(end_date != null && notice_period_days != null, DATEADD(end_date, -notice_period_days, 'days'), null)"
+          },
+          "days_to_notice": {
+            "type": "integer",
+            "title": "Days to Notice Deadline",
+            "x-calculate": "IF(notice_deadline != null, DATEDIFF($TODAY, notice_deadline), null)"
+          },
+          "days_to_expiry": {
+            "type": "integer",
+            "title": "Days to Expiry",
+            "x-calculate": "IF(end_date != null, DATEDIFF($TODAY, end_date), null)"
+          },
+          "action_required": {
+            "type": "integer",
+            "title": "Action Required (0–30 days to notice)",
+            "x-calculate": "IF((days_to_notice < 0 || (days_to_notice >= 0 && days_to_notice <= 30)) && status == 'active', 1, 0)"
+          }
+        },
+        "required": [
+          "title",
+          "vendor",
+          "category",
+          "owner",
+          "status"
+        ]
+      },
+      "listFields": [
+        "title",
+        "vendor",
+        "status",
+        "end_date",
+        "annual_value",
+        "notice_period_days",
+        "renewal_type",
+        "action_required"
+      ],
+      "searchFields": [
+        "title",
+        "vendor.name",
+        "category",
+        "description"
+      ],
+      "listFilters": [
+        {
+          "field": "status",
+          "value": "active",
+          "label": "Active",
+          "active": true
+        },
+        {
+          "field": "action_required",
+          "value": true,
+          "label": "Action Required (notice window)"
+        },
+        {
+          "field": "days_to_expiry",
+          "value": {
+            "$gte": 0,
+            "$lte": 90
+          },
+          "label": "Expiring within 90 days"
+        },
+        {
+          "field": "renewal_type",
+          "value": "auto",
+          "label": "Auto-renewing only"
+        }
+      ],
+      "ownerAccessExempt": [
+        "legal",
+        "finance",
+        "admin"
+      ],
+      "relatedCollections": [
+        {
+          "collection": "contract_events",
+          "foreignKey": "contract._id",
+          "title": "Audit Trail",
+          "displayFields": [
+            "type",
+            "detail",
+            "_createdBy",
+            "_createdAt"
+          ],
+          "allowCreate": true
+        }
+      ],
+      "formLayout": {
+        "groups": [
+          {
+            "label": "Basic Info",
+            "cols": 2,
+            "fields": [
+              "title",
+              "vendor",
+              "category",
+              "owner"
+            ]
+          },
+          {
+            "label": "Dates & Renewal",
+            "cols": 2,
+            "fields": [
+              "start_date",
+              "end_date",
+              "renewal_type",
+              "notice_period_days"
+            ]
+          },
+          {
+            "label": "Financial & Terms",
+            "cols": 2,
+            "fields": [
+              "annual_value",
+              "currency",
+              "payment_terms"
+            ]
+          },
+          {
+            "label": "Status & Tracking",
+            "cols": 2,
+            "fields": [
+              "status",
+              "days_to_notice",
+              "days_to_expiry",
+              "action_required"
+            ]
+          },
+          {
+            "label": "Details",
+            "cols": 1,
+            "fields": [
+              "description",
+              "document"
+            ]
+          }
+        ]
+      },
+      "listSummary": [
+        {
+          "field": "annual_value",
+          "aggregate": "sum"
+        }
+      ],
+      "triggers": [
+        {
+          "name": "Notice window opening",
+          "on": "schedule",
+          "schedule": {
+            "field": "notice_deadline",
+            "offsetDays": -30
+          },
+          "when": "status === 'active' && renewal_type !== 'none'",
+          "notify": {
+            "to": "owner",
+            "subject": "Notice window opens: $(title)",
+            "body": "To cancel or renegotiate '$(title)' with $(vendor.name) you must give notice by $(notice_deadline). It auto-renews otherwise."
+          }
+        },
+        {
+          "name": "Notice deadline in 7 days",
+          "on": "schedule",
+          "schedule": {
+            "field": "notice_deadline",
+            "offsetDays": -7
+          },
+          "when": "status === 'active' && renewal_type !== 'none'",
+          "notify": {
+            "to": "owner",
+            "subject": "Act now — notice deadline $(notice_deadline): $(title)",
+            "body": "7 days left to give notice on '$(title)' (deadline $(notice_deadline))."
+          }
+        },
+        {
+          "name": "Notice deadline today",
+          "on": "schedule",
+          "schedule": {
+            "field": "notice_deadline",
+            "offsetDays": 0
+          },
+          "when": "status === 'active' && renewal_type !== 'none'",
+          "notify": {
+            "to": "owner",
+            "subject": "Last day to give notice: $(title)",
+            "body": "Today is the notice deadline for '$(title)' with $(vendor.name)."
+          }
+        },
+        {
+          "name": "Contract expiring soon",
+          "on": "schedule",
+          "schedule": {
+            "field": "end_date",
+            "offsetDays": -30
+          },
+          "when": "status === 'active'",
+          "notify": {
+            "to": "owner",
+            "subject": "Contract expiring soon: $(title)",
+            "body": "'$(title)' with $(vendor.name) expires on $(end_date). Review renewal options."
+          }
+        },
+        {
+          "name": "Expired but still active",
+          "on": "schedule",
+          "schedule": {
+            "field": "end_date",
+            "offsetDays": 7
+          },
+          "when": "status === 'active'",
+          "notify": {
+            "to": "owner",
+            "subject": "Expired contract needs updating: $(title)",
+            "body": "'$(title)' expired on $(end_date) but is still marked active — set it to renewed, terminated, or expired."
+          }
+        }
+      ]
+    },
+    "contract_events": {
+      "label": "Contract Events",
+      "singularLabel": "Contract Event",
+      "icon": "list",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "contract": {
+            "type": "object",
+            "title": "Contract",
+            "x-lookup": {
+              "collection": "contracts",
+              "displayField": "title",
+              "searchFields": [
+                "title"
+              ]
+            },
+            "x-writeOnce": true
+          },
+          "type": {
+            "type": "string",
+            "title": "Event Type",
+            "enum": [
+              "note",
+              "renegotiation",
+              "amendment",
+              "termination",
+              "renewal",
+              "escalation"
+            ],
+            "x-default": "note"
+          },
+          "detail": {
+            "type": "string",
+            "format": "textarea",
+            "title": "Detail"
+          }
+        },
+        "required": [
+          "contract",
+          "type"
+        ]
+      },
+      "listFields": [
+        "contract",
+        "type",
+        "_createdBy",
+        "_createdAt"
+      ],
+      "searchFields": [
+        "contract.title",
+        "type",
+        "detail"
+      ],
+      "formLayout": {
+        "groups": [
+          {
+            "label": "Event Details",
+            "cols": 1,
+            "fields": [
+              "contract",
+              "type",
+              {
+                "field": "detail",
+                "cols": 2
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "pages": {
+    "dashboard": {
+      "title": "Dashboard",
+      "icon": "layout-dashboard",
+      "layout": {
+        "cols": 4
+      },
+      "components": [
+        {
+          "group": "Key Metrics",
+          "cols": 4,
+          "components": [
+            {
+              "type": "stat",
+              "title": "Total Annual Obligations",
+              "collection": "contracts",
+              "query": {
+                "status": "active"
+              },
+              "aggregate": "sum",
+              "field": "annual_value",
+              "width": "1"
+            },
+            {
+              "type": "stat",
+              "title": "Active Contracts",
+              "collection": "contracts",
+              "query": {
+                "status": "active"
+              },
+              "aggregate": "count",
+              "width": "1"
+            },
+            {
+              "type": "stat",
+              "title": "Auto-renewing",
+              "collection": "contracts",
+              "query": {
+                "status": "active",
+                "renewal_type": "auto"
+              },
+              "aggregate": "count",
+              "width": "1"
+            },
+            {
+              "type": "stat",
+              "title": "Action Required",
+              "collection": "contracts",
+              "query": {
+                "status": "active",
+                "action_required": true
+              },
+              "aggregate": "count",
+              "width": "1"
+            }
+          ]
+        },
+        {
+          "group": "Spend Analysis",
+          "cols": 4,
+          "components": [
+            {
+              "type": "chart",
+              "title": "Annual Spend by Category",
+              "collection": "contracts",
+              "query": {
+                "status": "active"
+              },
+              "chartType": "donut",
+              "groupBy": "category",
+              "aggregate": "sum",
+              "field": "annual_value",
+              "width": "2"
+            },
+            {
+              "type": "table",
+              "title": "Spend by Vendor",
+              "collection": "contracts",
+              "query": {
+                "status": "active"
+              },
+              "columns": [
+                "title",
+                "vendor",
+                "annual_value"
+              ],
+              "sort": {
+                "annual_value": -1
+              },
+              "limit": 5,
+              "width": "2"
+            }
+          ]
+        },
+        {
+          "group": "Critical Alerts",
+          "cols": 4,
+          "components": [
+            {
+              "type": "table",
+              "title": "Notice Window Closing (0–30 days)",
+              "collection": "contracts",
+              "query": {
+                "status": "active",
+                "action_required": {
+                  "$gt": 0
+                }
+              },
+              "columns": [
+                "title",
+                "vendor",
+                "end_date",
+                "days_to_notice"
+              ],
+              "sort": {
+                "days_to_notice": -1
+              },
+              "limit": 5,
+              "width": "2"
+            },
+            {
+              "type": "table",
+              "title": "Expiring within 90 days",
+              "collection": "contracts",
+              "query": {
+                "status": "active",
+                "days_to_expiry": {
+                  "$gte": 0,
+                  "$lte": 90
+                }
+              },
+              "columns": [
+                "title",
+                "vendor",
+                "end_date",
+                "days_to_expiry"
+              ],
+              "sort": {
+                "days_to_expiry": -1
+              },
+              "limit": 5,
+              "width": "2"
+            }
+          ]
+        },
+        {
+          "group": "Recent Activity",
+          "cols": 4,
+          "components": [
+            {
+              "type": "table",
+              "title": "Recent Contracts",
+              "collection": "contracts",
+              "columns": [
+                "title",
+                "vendor",
+                "status",
+                "end_date"
+              ],
+              "sort": {
+                "_createdAt": -1
+              },
+              "limit": 10,
+              "width": "4"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "tours": [
+    {
+      "id": "intro",
+      "label": "Welcome to Contracts",
+      "trigger": "first-visit",
+      "autoStart": true,
+      "steps": [
+        {
+          "target": "data-assistant",
+          "message": "I'm your AI assistant — I'll show you around in 6 quick steps."
+        },
+        {
+          "navigate": "/page/dashboard",
+          "target": "page:dashboard",
+          "message": "Your dashboard shows total annual spend, contracts in the notice window, and those expiring soon."
+        },
+        {
+          "navigate": "/contracts",
+          "target": "collection:contracts",
+          "message": "All your contracts live here. Filter by status, action required, or expiry window."
+        },
+        {
+          "target": "collection:contracts.add",
+          "message": "Click + New to add a contract.",
+          "action": "click"
+        },
+        {
+          "target": "collection:contracts.field:title",
+          "message": "Start by entering the contract title. Core terms lock once the contract goes active."
+        },
+        {
+          "target": "data-assistant",
+          "message": "That's it! Ask me anything — 'show expiring contracts', 'add a vendor', or create a spend report. I'm here to help."
+        }
+      ]
+    }
+  ]
+}

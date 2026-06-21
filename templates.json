@@ -30,6 +30,21 @@
       "authorUrl": "https://snill.ai",
       "version": "1.0.0",
       "updatedAt": "2026-06-05"
+    },
+    {
+      "id": "contracts",
+      "name": "Contracts",
+      "description": "Track contracts, vendors and renewals with notice-period alerts, a status workflow and a compliance dashboard.",
+      "category": "Legal & Compliance",
+      "tags": ["contracts", "vendors", "renewals", "compliance"],
+      "icon": "files",
+      "screenshot": "templates/contracts/screenshot.png",
+      "path": "templates/contracts",
+      "collections": ["contracts", "vendors", "contract_events"],
+      "author": "snill",
+      "authorUrl": "https://snill.ai",
+      "version": "1.0.0",
+      "updatedAt": "2026-06-21"
     }
   ]
 }
