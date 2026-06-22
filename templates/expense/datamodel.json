@@ -44,7 +44,7 @@
     },
     "startPage": "dashboard",
     "variables": {
-      "currency": "EUR"
+      "currency": "NOK"
     },
     "roles": [
       "manager",
@@ -127,7 +127,7 @@
           "amount": {
             "type": "number",
             "format": "currency",
-            "x-currency": "EUR",
+            "x-currency": "NOK",
             "title": "Total Amount",
             "x-calculate": "SUM(expense_items.amount)"
           },
@@ -183,6 +183,16 @@
             "type": "string",
             "format": "textarea",
             "title": "Manager Notes"
+          },
+          "days_since_created": {
+            "type": "number",
+            "title": "Days Since Created",
+            "x-calculate": "DATEDIFF(_createdAt, $TODAY)"
+          },
+          "created_display": {
+            "type": "string",
+            "title": "Created",
+            "x-template": "Created $(days_since_created) day(s) ago"
           }
         },
         "required": [
@@ -195,9 +205,10 @@
       "listFields": [
         "title",
         "employee",
+        "expense_date",
         "status",
         "amount",
-        "expense_date"
+        "created_display"
       ],
       "searchFields": [
         "title",
@@ -366,6 +377,50 @@
       "ownerAccess": "own",
       "ownerAccessExempt": [
         "manager"
+      ],
+      "showReferences": true,
+      "conditionalFormats": [
+        {
+          "when": "status == 'draft'",
+          "fields": [
+            "status"
+          ],
+          "color": "gray",
+          "as": "badge"
+        },
+        {
+          "when": "status == 'submitted'",
+          "fields": [
+            "status"
+          ],
+          "color": "blue",
+          "as": "badge"
+        },
+        {
+          "when": "status == 'approved'",
+          "fields": [
+            "status"
+          ],
+          "color": "green",
+          "as": "badge"
+        },
+        {
+          "when": "status == 'rejected'",
+          "fields": [
+            "status"
+          ],
+          "color": "red",
+          "as": "badge"
+        },
+        {
+          "when": "status == 'paid'",
+          "fields": [
+            "status"
+          ],
+          "color": "green",
+          "as": "badge",
+          "emphasis": "bold"
+        }
       ]
     },
     "expense_items": {
@@ -411,7 +466,7 @@
           "amount": {
             "type": "number",
             "format": "currency",
-            "x-currency": "EUR",
+            "x-currency": "NOK",
             "title": "Amount"
           },
           "expense_date": {
@@ -423,7 +478,7 @@
             "type": "string",
             "format": "file",
             "title": "Receipt/Attachment",
-            "x-accept": ".pdf,.jpg,.jpeg,.png,.doc,.docx"
+            "x-accept": ".pdf,.jpg,.jpeg,.png,.doc,.docx,.mp4"
           },
           "created_at": {
             "type": "string",
@@ -477,7 +532,12 @@
       "ownerAccessExempt": [
         "manager"
       ],
-      "allowBulkEdit": true
+      "allowBulkEdit": true,
+      "documentImport": {
+        "enabled": true,
+        "accept": "image/*,application/pdf",
+        "fileField": "attachment"
+      }
     }
   },
   "pages": {

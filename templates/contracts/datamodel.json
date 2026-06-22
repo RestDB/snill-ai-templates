@@ -500,7 +500,12 @@
             "body": "'$(title)' expired on $(end_date) but is still marked active — set it to renewed, terminated, or expired."
           }
         }
-      ]
+      ],
+      "documentImport": {
+        "enabled": true,
+        "accept": "application/pdf,image/*",
+        "fileField": "document"
+      }
     },
     "contract_events": {
       "label": "Contract Events",
