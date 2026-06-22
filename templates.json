@@ -11,6 +11,14 @@
       "screenshot": "templates/consulting/screenshot.png",
       "path": "templates/consulting",
       "collections": ["clients", "consultants", "projects", "time_entries"],
+      "features": [
+        "Client and project management",
+        "Billable time tracking with a draft → submitted → approved workflow",
+        "Project teams with per-consultant rate levels",
+        "Ready-made dashboard: active projects, hours this week, pending approvals",
+        "Billing report and consultant CV reports"
+      ],
+      "screenshots": [],
       "author": "snill",
       "authorUrl": "https://snill.ai",
       "version": "1.0.0",
@@ -26,6 +34,13 @@
       "screenshot": "templates/expense/screenshot.png",
       "path": "templates/expense",
       "collections": ["expenses", "expense_items"],
+      "features": [
+        "Employee expense submission with itemized line items",
+        "Receipt file attachments on every expense",
+        "Submitted → approved/rejected approval workflow",
+        "Ready-made dashboard: spend totals, pending approvals, and breakdowns"
+      ],
+      "screenshots": [],
       "author": "snill",
       "authorUrl": "https://snill.ai",
       "version": "1.0.0",
@@ -41,6 +56,13 @@
       "screenshot": "templates/contracts/screenshot.png",
       "path": "templates/contracts",
       "collections": ["contracts", "vendors", "contract_events"],
+      "features": [
+        "Contracts linked to vendors with a full event timeline",
+        "Renewal and notice-period alerts",
+        "Status workflow across contract stages",
+        "Compliance dashboard: expiring contracts and active vendors"
+      ],
+      "screenshots": [],
       "author": "snill",
       "authorUrl": "https://snill.ai",
       "version": "1.0.0",
