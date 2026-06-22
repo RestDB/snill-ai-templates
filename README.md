@@ -57,13 +57,16 @@ A single, hand-edited file listing every template:
       "tags": ["consulting", "time tracking", "billing", "projects"],
       "icon": "users",
       "screenshot": "templates/consulting/screenshot.png",
+      "screenshotCaption": "The consulting dashboard",
       "path": "templates/consulting",
       "collections": ["clients", "consultants", "projects", "time_entries"],
       "features": [
         "Billable time tracking with an approval workflow",
         "Ready-made dashboard: active projects, hours this week, pending approvals"
       ],
-      "screenshots": ["templates/consulting/screenshot-2.png"]
+      "screenshots": [
+        { "src": "templates/consulting/screenshot-2.png", "caption": "The data-model editor" }
+      ]
     }
   ]
 }
@@ -78,7 +81,8 @@ A single, hand-edited file listing every template:
 | `tags` | no | Keywords for search/filtering. |
 | `icon` | no | Lucide icon name, usually matching the app's `app.icon`. |
 | `screenshot` | no | Repo-relative path to the primary preview image (the picker thumbnail). |
-| `screenshots` | no | Additional repo-relative preview image paths beyond `screenshot`, shown as a gallery alongside the picker thumbnail. |
+| `screenshotCaption` | no | Caption shown beneath the primary `screenshot` in the gallery carousel. |
+| `screenshots` | no | Additional preview images beyond `screenshot`, as objects `{ "src": "<repo-relative path>", "caption": "<optional>" }`. Shown after the primary in the gallery carousel, each with its caption beneath it. |
 | `path` | yes | Repo-relative path to the template folder. |
 | `collections` | no | Collection keys in the template, shown as a quick summary. |
 | `features` | no | Short list of headline capabilities (strings), authored with the template. Surfaced in the gallery and template detail views. |
@@ -98,10 +102,10 @@ protected, so all changes (ours included) go through a PR.
 1. Create a folder `templates/<id>/`.
 2. Add `datamodel.json` — a complete, valid snill data model (`app`, `collections`,
    and optionally `pages` and `tours`).
-3. Optionally add `screenshot.png` showing the app — and list any extra preview
-   images (e.g. `screenshot-2.png`) in the manifest's `screenshots`.
+3. Optionally add `screenshot.png` showing the app — plus any extra preview images
+   (e.g. `screenshot-2.png`), listed as `{ src, caption }` objects in `screenshots`.
 4. Add an entry to `templates.json` with `id` matching the folder name — optionally
-   with `features` (a few headline capabilities) and `screenshots`.
+   with `features`, a `screenshotCaption`, and `screenshots`.
 5. Open a PR.
 
 ### Keep templates clean
