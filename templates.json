@@ -27,14 +27,15 @@
     {
       "id": "expense",
       "name": "Expense",
-      "description": "Employee expense tracking and approval, with expense items, receipt attachments and a ready-made dashboard.",
+      "description": "Employee expense tracking and approval, with AI receipt scanning, itemized line items and a ready-made dashboard.",
       "category": "Finance",
-      "tags": ["expenses", "approval", "receipts", "finance"],
+      "tags": ["expenses", "approval", "receipts", "finance", "ai"],
       "icon": "receipt",
       "screenshot": "templates/expense/screenshot.png",
       "path": "templates/expense",
       "collections": ["expenses", "expense_items"],
       "features": [
+        "Snap a photo of a receipt to auto-fill an expense item with AI",
         "Employee expense submission with itemized line items",
         "Receipt file attachments on every expense",
         "Submitted → approved/rejected approval workflow",
@@ -43,20 +44,21 @@
       "screenshots": [],
       "author": "snill",
       "authorUrl": "https://snill.ai",
-      "version": "1.0.0",
-      "updatedAt": "2026-06-05"
+      "version": "1.1.0",
+      "updatedAt": "2026-06-22"
     },
     {
       "id": "contracts",
       "name": "Contracts",
-      "description": "Track contracts, vendors and renewals with notice-period alerts, a status workflow and a compliance dashboard.",
+      "description": "Track contracts, vendors and renewals with AI document scanning, notice-period alerts, a status workflow and a compliance dashboard.",
       "category": "Legal & Compliance",
-      "tags": ["contracts", "vendors", "renewals", "compliance"],
+      "tags": ["contracts", "vendors", "renewals", "compliance", "ai"],
       "icon": "files",
       "screenshot": "templates/contracts/screenshot.png",
       "path": "templates/contracts",
       "collections": ["contracts", "vendors", "contract_events"],
       "features": [
+        "AI document scanning: drop a PDF or image to auto-fill contract terms",
         "Contracts linked to vendors with a full event timeline",
         "Renewal and notice-period alerts",
         "Status workflow across contract stages",
@@ -65,8 +67,8 @@
       "screenshots": [],
       "author": "snill",
       "authorUrl": "https://snill.ai",
-      "version": "1.0.0",
-      "updatedAt": "2026-06-21"
+      "version": "1.1.0",
+      "updatedAt": "2026-06-22"
     }
   ]
 }
