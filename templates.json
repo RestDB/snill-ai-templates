@@ -9,6 +9,7 @@
       "tags": ["consulting", "time tracking", "billing", "projects"],
       "icon": "users",
       "screenshot": "templates/consulting/screenshot.png",
+      "screenshotCaption": "The consulting dashboard — active projects, hours this week, and pending approvals.",
       "path": "templates/consulting",
       "collections": ["clients", "consultants", "projects", "time_entries"],
       "features": [
@@ -32,6 +33,7 @@
       "tags": ["expenses", "approval", "receipts", "finance", "ai"],
       "icon": "receipt",
       "screenshot": "templates/expense/screenshot.png",
+      "screenshotCaption": "The expense dashboard — spend totals, pending approvals, and breakdowns.",
       "path": "templates/expense",
       "collections": ["expenses", "expense_items"],
       "features": [
@@ -55,6 +57,7 @@
       "tags": ["contracts", "vendors", "renewals", "compliance", "ai"],
       "icon": "files",
       "screenshot": "templates/contracts/screenshot.png",
+      "screenshotCaption": "The compliance dashboard — expiring contracts, active vendors, and renewals.",
       "path": "templates/contracts",
       "collections": ["contracts", "vendors", "contract_events"],
       "features": [
