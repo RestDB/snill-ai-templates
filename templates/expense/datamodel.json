@@ -44,7 +44,7 @@
     },
     "startPage": "dashboard",
     "variables": {
-      "currency": "NOK"
+      "currency": "EUR"
     },
     "roles": [
       "manager",
@@ -127,7 +127,7 @@
           "amount": {
             "type": "number",
             "format": "currency",
-            "x-currency": "NOK",
+            "x-currency": "EUR",
             "title": "Total Amount",
             "x-calculate": "SUM(expense_items.amount)"
           },
@@ -466,7 +466,7 @@
           "amount": {
             "type": "number",
             "format": "currency",
-            "x-currency": "NOK",
+            "x-currency": "EUR",
             "title": "Amount"
           },
           "expense_date": {
