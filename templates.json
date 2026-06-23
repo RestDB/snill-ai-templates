@@ -43,11 +43,16 @@
         "Submitted → approved/rejected approval workflow",
         "Ready-made dashboard: spend totals, pending approvals, and breakdowns"
       ],
-      "screenshots": [],
+      "screenshots": [
+        { "src": "templates/expense/screenshot-2.png", "caption": "Snap a photo of a receipt on your phone and let the AI fill in the expense item details." },
+        { "src": "templates/expense/screenshot-3.png", "caption": "The expense dashboard — spend totals, expenses by status, top categories, and recent activity." },
+        { "src": "templates/expense/screenshot-4.png", "caption": "Upload a receipt photo — here a DoorDash meal receipt — straight onto the expense item." },
+        { "src": "templates/expense/screenshot-5.png", "caption": "The AI reads the receipt and auto-fills the expense item: amount, date, category, and description." }
+      ],
       "author": "snill",
       "authorUrl": "https://snill.ai",
       "version": "1.1.0",
-      "updatedAt": "2026-06-22"
+      "updatedAt": "2026-06-23"
     },
     {
       "id": "contracts",
@@ -67,11 +72,15 @@
         "Status workflow across contract stages",
         "Compliance dashboard: expiring contracts and active vendors"
       ],
-      "screenshots": [],
+      "screenshots": [
+        { "src": "templates/contracts/screenshot-2.png", "caption": "Start from the source document — open a contract PDF, like this multi-page model contract." },
+        { "src": "templates/contracts/screenshot-3.png", "caption": "Scan / upload to fill: the AI reads the PDF and auto-fills the New Contract form — title, vendor, category, dates, renewal terms, and financials." },
+        { "src": "templates/contracts/screenshot-4.png", "caption": "The created contract — full details and the draft → active → renewed → archived status workflow." }
+      ],
       "author": "snill",
       "authorUrl": "https://snill.ai",
       "version": "1.1.0",
-      "updatedAt": "2026-06-22"
+      "updatedAt": "2026-06-23"
     }
   ]
 }
