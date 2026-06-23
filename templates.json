@@ -19,11 +19,16 @@
         "Ready-made dashboard: active projects, hours this week, pending approvals",
         "Billing report and consultant CV reports"
       ],
-      "screenshots": [],
+      "screenshots": [
+        { "src": "templates/consulting/screenshot-2.png", "caption": "Project detail — client, status, dates, per-level rates, and rolled-up total hours and billable amount." },
+        { "src": "templates/consulting/screenshot-3.png", "caption": "Time entry detail — hours logged against a project and consultant, with the billable amount calculated automatically." },
+        { "src": "templates/consulting/screenshot-4.png", "caption": "Consultant CV report — profile, rate level, education, and experience for each consultant." },
+        { "src": "templates/consulting/screenshot-5.png", "caption": "Billing report — billable hours and revenue grouped by client, project, and consultant, with a grand total." }
+      ],
       "author": "snill",
       "authorUrl": "https://snill.ai",
       "version": "1.0.0",
-      "updatedAt": "2026-05-29"
+      "updatedAt": "2026-06-23"
     },
     {
       "id": "expense",
