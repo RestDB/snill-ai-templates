@@ -6,12 +6,22 @@
       "name": "Consulting",
       "description": "Manage clients, consultants, projects and billable time tracking, with a ready-made dashboard.",
       "category": "Professional Services",
-      "tags": ["consulting", "time tracking", "billing", "projects"],
+      "tags": [
+        "consulting",
+        "time tracking",
+        "billing",
+        "projects"
+      ],
       "icon": "users",
       "screenshot": "templates/consulting/screenshot.png",
-      "screenshotCaption": "The consulting dashboard — active projects, hours this week, and pending approvals.",
+      "screenshotCaption": "The consulting dashboard — active clients and projects, billable amounts by project and consultant, and recent time entries.",
       "path": "templates/consulting",
-      "collections": ["clients", "consultants", "projects", "time_entries"],
+      "collections": [
+        "clients",
+        "consultants",
+        "projects",
+        "time_entries"
+      ],
       "features": [
         "Client and project management",
         "Billable time tracking with a draft → submitted → approved workflow",
@@ -20,10 +30,26 @@
         "Billing report and consultant CV reports"
       ],
       "screenshots": [
-        { "src": "templates/consulting/screenshot-2.png", "caption": "Project detail — client, status, dates, per-level rates, and rolled-up total hours and billable amount." },
-        { "src": "templates/consulting/screenshot-3.png", "caption": "Time entry detail — hours logged against a project and consultant, with the billable amount calculated automatically." },
-        { "src": "templates/consulting/screenshot-4.png", "caption": "Consultant CV report — profile, rate level, education, and experience for each consultant." },
-        { "src": "templates/consulting/screenshot-5.png", "caption": "Billing report — billable hours and revenue grouped by client, project, and consultant, with a grand total." }
+        {
+          "src": "templates/consulting/screenshot-2.png",
+          "caption": "Project detail — client, status, dates, per-level rates, and rolled-up total hours and billable amount."
+        },
+        {
+          "src": "templates/consulting/screenshot-3.png",
+          "caption": "Every time entry in one place — filter by period, with hours and billable amounts totalled automatically."
+        },
+        {
+          "src": "templates/consulting/screenshot-4.png",
+          "caption": "Billing report — billable hours and revenue grouped by client, project, and consultant, with a grand total."
+        },
+        {
+          "src": "templates/consulting/screenshot-5.png",
+          "caption": "Consultant CV report — profile, rate level, education, and experience for each consultant."
+        },
+        {
+          "src": "templates/consulting/screenshot-6.png",
+          "caption": "Talk to your data — ask a question in plain English and get an instant table, with CSV and JSON export."
+        }
       ],
       "author": "snill",
       "authorUrl": "https://snill.ai",
@@ -35,12 +61,21 @@
       "name": "Expense",
       "description": "Employee expense tracking and approval, with AI receipt scanning, itemized line items and a ready-made dashboard.",
       "category": "Finance",
-      "tags": ["expenses", "approval", "receipts", "finance", "ai"],
+      "tags": [
+        "expenses",
+        "approval",
+        "receipts",
+        "finance",
+        "ai"
+      ],
       "icon": "receipt",
       "screenshot": "templates/expense/screenshot.png",
-      "screenshotCaption": "The expense dashboard — spend totals, pending approvals, and breakdowns.",
+      "screenshotCaption": "The expense dashboard — spend totals, approvals, expenses by status, and top categories.",
       "path": "templates/expense",
-      "collections": ["expenses", "expense_items"],
+      "collections": [
+        "expenses",
+        "expense_items"
+      ],
       "features": [
         "Snap a photo of a receipt to auto-fill an expense item with AI",
         "Employee expense submission with itemized line items",
@@ -49,10 +84,22 @@
         "Ready-made dashboard: spend totals, pending approvals, and breakdowns"
       ],
       "screenshots": [
-        { "src": "templates/expense/screenshot-2.png", "caption": "Snap a photo of a receipt on your phone and let the AI fill in the expense item details." },
-        { "src": "templates/expense/screenshot-3.png", "caption": "The expense dashboard — spend totals, expenses by status, top categories, and recent activity." },
-        { "src": "templates/expense/screenshot-4.png", "caption": "Upload a receipt photo — here a DoorDash meal receipt — straight onto the expense item." },
-        { "src": "templates/expense/screenshot-5.png", "caption": "The AI reads the receipt and auto-fills the expense item: amount, date, category, and description." }
+        {
+          "src": "templates/expense/screenshot-2.png",
+          "caption": "Snap a photo of a receipt on your phone and let the AI fill in the expense item details."
+        },
+        {
+          "src": "templates/expense/screenshot-3.png",
+          "caption": "Every expense item in one list — categories, amounts, and attached receipts, totalled automatically."
+        },
+        {
+          "src": "templates/expense/screenshot-4.png",
+          "caption": "Add an expense item, or hit “Scan / upload to fill” and let the AI read the receipt for you."
+        },
+        {
+          "src": "templates/expense/screenshot-5.png",
+          "caption": "Talk to your data — ask for spend by category and get an instant breakdown, with PDF, CSV and JSON export."
+        }
       ],
       "author": "snill",
       "authorUrl": "https://snill.ai",
@@ -64,12 +111,22 @@
       "name": "Contracts",
       "description": "Track contracts, vendors and renewals with AI document scanning, notice-period alerts, a status workflow and a compliance dashboard.",
       "category": "Legal & Compliance",
-      "tags": ["contracts", "vendors", "renewals", "compliance", "ai"],
+      "tags": [
+        "contracts",
+        "vendors",
+        "renewals",
+        "compliance",
+        "ai"
+      ],
       "icon": "files",
       "screenshot": "templates/contracts/screenshot.png",
-      "screenshotCaption": "The compliance dashboard — expiring contracts, active vendors, and renewals.",
+      "screenshotCaption": "The contracts dashboard — annual obligations, active contracts, spend by category, and expiry alerts.",
       "path": "templates/contracts",
-      "collections": ["contracts", "vendors", "contract_events"],
+      "collections": [
+        "contracts",
+        "vendors",
+        "contract_events"
+      ],
       "features": [
         "AI document scanning: drop a PDF or image to auto-fill contract terms",
         "Contracts linked to vendors with a full event timeline",
@@ -78,9 +135,22 @@
         "Compliance dashboard: expiring contracts and active vendors"
       ],
       "screenshots": [
-        { "src": "templates/contracts/screenshot-2.png", "caption": "Start from the source document — open a contract PDF, like this multi-page model contract." },
-        { "src": "templates/contracts/screenshot-3.png", "caption": "Scan / upload to fill: the AI reads the PDF and auto-fills the New Contract form — title, vendor, category, dates, renewal terms, and financials." },
-        { "src": "templates/contracts/screenshot-4.png", "caption": "The created contract — full details and the draft → active → renewed → archived status workflow." }
+        {
+          "src": "templates/contracts/screenshot-2.png",
+          "caption": "Add a contract, or “Scan / upload to fill” to let the AI read the PDF and populate every field — vendor, dates, renewal terms, and financials."
+        },
+        {
+          "src": "templates/contracts/screenshot-3.png",
+          "caption": "Every contract in one view — vendor, status, value, notice period, and renewal type."
+        },
+        {
+          "src": "templates/contracts/screenshot-4.png",
+          "caption": "The contract record — full details and the draft → active → renewed → archived status workflow."
+        },
+        {
+          "src": "templates/contracts/screenshot-5.png",
+          "caption": "Talk to your data — ask for active contracts ranked by value and get an instant report."
+        }
       ],
       "author": "snill",
       "authorUrl": "https://snill.ai",
