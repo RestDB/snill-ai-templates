@@ -179,7 +179,7 @@
         { "src": "templates/incident/screenshot-2.png", "caption": "The incidents register — color-coded severity and status badges, quick filters (Hide closed, Critical, Overdue) and search." },
         { "src": "templates/incident/screenshot-3.png", "caption": "Incident detail — photo evidence, the new → under review → in progress → resolved → closed workflow, and the investigation and root-cause record." },
         { "src": "templates/incident/screenshot-4.png", "caption": "Report an incident fast — drop a photo or PDF, or hit 'Scan / upload to fill' to let AI draft the report." },
-        { "src": "templates/incident/screenshot-5.png", "caption": "The AI reads the photo and auto-fills the report: title, category, severity, location and what happened — ready to review and save." }
+        { "src": "templates/incident/screenshot-5.png", "caption": "The AI reads the photo and auto-fills the report — title, category, severity, location and what happened — and attaches the photo, ready to review and save." }
       ],
       "author": "snill",
       "authorUrl": "https://snill.ai",
