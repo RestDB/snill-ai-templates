@@ -1,0 +1,1012 @@
+{
+  "app": {
+    "title": "Incident Reporting",
+    "subtitle": "Deviations, corrective actions & compliance",
+    "icon": "shield-alert",
+    "theme": "nlan",
+    "startPage": "dashboard",
+    "roles": [
+      "employee",
+      "manager",
+      "hse"
+    ],
+    "sidebar": {
+      "groups": [
+        {
+          "label": "Main",
+          "items": [
+            {
+              "type": "collection",
+              "collection": "incidents",
+              "icon": "shield-alert"
+            },
+            {
+              "type": "collection",
+              "collection": "corrective_actions",
+              "icon": "list-checks"
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "activity",
+              "label": "Activity Log",
+              "icon": "activity"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "collections": {
+    "incidents": {
+      "label": "Incidents",
+      "singularLabel": "Incident",
+      "icon": "shield-alert",
+      "ownerAccess": "own",
+      "ownerAccessExempt": [
+        "manager",
+        "hse"
+      ],
+      "roleAccess": {
+        "read": [
+          "employee",
+          "manager",
+          "hse"
+        ],
+        "modify": [
+          "employee",
+          "manager",
+          "hse"
+        ],
+        "delete": [
+          "manager",
+          "hse"
+        ]
+      },
+      "documentImport": {
+        "enabled": true,
+        "accept": "image/*,application/pdf",
+        "fileField": "photo",
+        "fields": [
+          "title",
+          "category",
+          "severity",
+          "description",
+          "location"
+        ],
+        "instruction": "Extract a concise incident title, the category, a severity, what happened, and where. If a severity is not stated, infer it conservatively.",
+        "model": "sonnet"
+      },
+      "schema": {
+        "type": "object",
+        "required": [
+          "title",
+          "category",
+          "severity",
+          "description"
+        ],
+        "properties": {
+          "incident_no": {
+            "type": "string",
+            "title": "Incident #",
+            "x-auto": {
+              "type": "sequence",
+              "prefix": "INC-",
+              "pad": 6,
+              "start": 1
+            }
+          },
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "minLength": 1
+          },
+          "category": {
+            "type": "string",
+            "title": "Category",
+            "enum": [
+              "HSE",
+              "Quality",
+              "Security",
+              "Environment"
+            ]
+          },
+          "severity": {
+            "type": "string",
+            "title": "Severity",
+            "enum": [
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ],
+            "x-default": "medium"
+          },
+          "description": {
+            "type": "string",
+            "title": "What happened",
+            "format": "textarea",
+            "minLength": 1
+          },
+          "location": {
+            "type": "string",
+            "title": "Location"
+          },
+          "photo": {
+            "type": "array",
+            "title": "Photos / reports",
+            "items": {
+              "type": "string",
+              "format": "image"
+            },
+            "x-accept": ".jpg,.jpeg,.png,.webp,.pdf"
+          },
+          "reported_by": {
+            "type": "object",
+            "title": "Reported by",
+            "properties": {
+              "_id": {
+                "type": "string"
+              }
+            },
+            "x-lookup": {
+              "collection": "$users",
+              "displayField": "name",
+              "searchFields": [
+                "name",
+                "email"
+              ]
+            }
+          },
+          "assigned_to": {
+            "type": "object",
+            "title": "Assigned to",
+            "properties": {
+              "_id": {
+                "type": "string"
+              }
+            },
+            "x-lookup": {
+              "collection": "$users",
+              "displayField": "name",
+              "searchFields": [
+                "name",
+                "email"
+              ]
+            }
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "enum": [
+              "new",
+              "under_review",
+              "in_progress",
+              "resolved",
+              "closed",
+              "rejected"
+            ],
+            "x-default": "new",
+            "x-transitions": {
+              "new": {
+                "under_review": [
+                  "manager",
+                  "hse"
+                ],
+                "rejected": [
+                  "manager",
+                  "hse"
+                ]
+              },
+              "under_review": {
+                "in_progress": [
+                  "manager",
+                  "hse"
+                ],
+                "rejected": [
+                  "manager",
+                  "hse"
+                ]
+              },
+              "in_progress": {
+                "resolved": [
+                  "manager",
+                  "hse"
+                ]
+              },
+              "resolved": {
+                "closed": [
+                  "manager",
+                  "hse"
+                ],
+                "in_progress": [
+                  "manager",
+                  "hse"
+                ]
+              },
+              "rejected": {
+                "new": [
+                  "employee",
+                  "manager",
+                  "hse"
+                ]
+              }
+            }
+          },
+          "root_cause": {
+            "type": "string",
+            "title": "Root cause",
+            "format": "textarea"
+          },
+          "due_date": {
+            "type": "string",
+            "title": "Due date",
+            "format": "date"
+          },
+          "closed_at": {
+            "type": "string",
+            "title": "Closed",
+            "format": "date",
+            "x-hidden": true
+          },
+          "days_open": {
+            "type": "integer",
+            "title": "Days open",
+            "x-calculate": "DATEDIFF(_createdAt, $TODAY)"
+          },
+          "overdue": {
+            "type": "integer",
+            "title": "Overdue",
+            "x-hidden": true,
+            "x-calculate": "IF(DATEDIFF(due_date, $TODAY) > 0, 1, 0)"
+          },
+          "action_count": {
+            "type": "integer",
+            "title": "Corrective actions",
+            "x-calculate": "COUNT(corrective_actions)"
+          }
+        }
+      },
+      "listFields": [
+        "incident_no",
+        "title",
+        "category",
+        "severity",
+        "status",
+        "assigned_to",
+        "due_date",
+        "days_open"
+      ],
+      "searchFields": [
+        "title",
+        "description",
+        "location",
+        "incident_no"
+      ],
+      "defaultSort": {
+        "_createdAt": -1
+      },
+      "listSummary": [
+        {
+          "field": "incident_no",
+          "aggregate": "count"
+        }
+      ],
+      "listFilters": [
+        {
+          "field": "status",
+          "value": "closed",
+          "label": "Hide closed",
+          "exclude": true,
+          "active": true
+        },
+        {
+          "field": "severity",
+          "value": "critical",
+          "label": "Critical",
+          "active": false
+        },
+        {
+          "field": "overdue",
+          "value": 1,
+          "label": "Overdue",
+          "active": false
+        }
+      ],
+      "conditionalFormats": [
+        {
+          "when": "severity == 'critical'",
+          "fields": [
+            "severity"
+          ],
+          "color": "red",
+          "as": "badge"
+        },
+        {
+          "when": "severity == 'high'",
+          "fields": [
+            "severity"
+          ],
+          "color": "amber",
+          "as": "badge"
+        },
+        {
+          "when": "severity == 'medium'",
+          "fields": [
+            "severity"
+          ],
+          "color": "blue",
+          "as": "badge"
+        },
+        {
+          "when": "severity == 'low'",
+          "fields": [
+            "severity"
+          ],
+          "color": "gray",
+          "as": "badge"
+        },
+        {
+          "when": "status == 'closed'",
+          "fields": [
+            "status"
+          ],
+          "color": "green",
+          "as": "badge"
+        },
+        {
+          "when": "status == 'rejected'",
+          "fields": [
+            "status"
+          ],
+          "color": "gray",
+          "as": "badge"
+        },
+        {
+          "when": "status == 'in_progress'",
+          "fields": [
+            "status"
+          ],
+          "color": "blue",
+          "as": "badge"
+        },
+        {
+          "when": "overdue == 1 && status != 'closed'",
+          "target": "row",
+          "color": "red",
+          "as": "background"
+        }
+      ],
+      "x-rules": [
+        {
+          "when": "status != 'new'",
+          "readonly": [
+            "category",
+            "description"
+          ]
+        },
+        {
+          "when": "status == 'closed'",
+          "set": {
+            "closed_at": "$TODAY"
+          }
+        },
+        {
+          "when": "status == 'resolved'",
+          "required": [
+            "root_cause"
+          ]
+        }
+      ],
+      "formLayout": {
+        "cols": 2,
+        "groups": [
+          {
+            "label": "Report",
+            "cols": 2,
+            "fields": [
+              {
+                "field": "title",
+                "cols": 2
+              },
+              "category",
+              "severity",
+              "location",
+              "photo",
+              {
+                "field": "description",
+                "cols": 2
+              }
+            ]
+          },
+          {
+            "label": "Investigation",
+            "cols": 2,
+            "fields": [
+              "assigned_to",
+              "status",
+              "due_date",
+              {
+                "field": "root_cause",
+                "cols": 2
+              }
+            ]
+          },
+          {
+            "label": "Closure",
+            "cols": 2,
+            "fields": [
+              "closed_at",
+              "days_open",
+              "action_count"
+            ]
+          }
+        ]
+      },
+      "relatedCollections": [
+        {
+          "collection": "corrective_actions",
+          "foreignKey": "incident._id",
+          "title": "Corrective actions",
+          "displayFields": [
+            "action_no",
+            "action",
+            "owner",
+            "due_date",
+            "status"
+          ],
+          "allowCreate": true,
+          "sort": {
+            "due_date": 1
+          },
+          "filters": [
+            {
+              "field": "status",
+              "value": "done",
+              "label": "Hide done",
+              "exclude": true,
+              "active": true
+            }
+          ],
+          "listSummary": [
+            {
+              "field": "action_no",
+              "aggregate": "count"
+            }
+          ]
+        }
+      ],
+      "showReferences": false,
+      "allowBulkDelete": true,
+      "triggers": [
+        {
+          "name": "Assignee notified",
+          "on": "update",
+          "when": "assigned_to._id !== _prev.assigned_to._id && assigned_to._id != ''",
+          "notify": {
+            "to": "assigned_to",
+            "subject": "Incident assigned to you: $(title)",
+            "body": "Incident $(incident_no) ($(severity)) has been assigned to you. Due: $(due_date)."
+          }
+        },
+        {
+          "name": "Reporter notified on close",
+          "on": "update",
+          "when": "status === 'closed' && _prev.status !== 'closed'",
+          "notify": {
+            "to": "$OWNER",
+            "subject": "Your incident is closed: $(title)",
+            "body": "Incident $(incident_no) has been resolved and closed. Root cause: $(root_cause)."
+          }
+        },
+        {
+          "name": "Due soon",
+          "on": "schedule",
+          "schedule": {
+            "field": "due_date",
+            "offsetDays": -3
+          },
+          "when": "status !== 'closed' && status !== 'rejected'",
+          "notify": {
+            "to": "assigned_to",
+            "subject": "Incident due in 3 days: $(title)",
+            "body": "Incident $(incident_no) is due on $(due_date) and is still $(status)."
+          }
+        },
+        {
+          "name": "Overdue",
+          "on": "schedule",
+          "schedule": {
+            "field": "due_date",
+            "offsetDays": 1
+          },
+          "when": "status !== 'closed' && status !== 'rejected'",
+          "notify": {
+            "to": "assigned_to",
+            "subject": "Incident OVERDUE: $(title)",
+            "body": "Incident $(incident_no) was due $(due_date) and is still open ($(status))."
+          }
+        }
+      ]
+    },
+    "corrective_actions": {
+      "label": "Corrective Actions",
+      "singularLabel": "Corrective Action",
+      "icon": "list-checks",
+      "roleAccess": {
+        "read": [
+          "employee",
+          "manager",
+          "hse"
+        ],
+        "modify": [
+          "employee",
+          "manager",
+          "hse"
+        ],
+        "delete": [
+          "manager",
+          "hse"
+        ]
+      },
+      "schema": {
+        "type": "object",
+        "required": [
+          "incident",
+          "action"
+        ],
+        "properties": {
+          "action_no": {
+            "type": "string",
+            "title": "Action #",
+            "x-auto": {
+              "type": "sequence",
+              "prefix": "CA-",
+              "pad": 6,
+              "start": 1
+            }
+          },
+          "incident": {
+            "type": "object",
+            "title": "Incident",
+            "properties": {
+              "_id": {
+                "type": "string"
+              }
+            },
+            "x-writeOnce": true,
+            "x-lookup": {
+              "collection": "incidents",
+              "displayField": [
+                "incident_no",
+                "title"
+              ],
+              "searchFields": [
+                "incident_no",
+                "title"
+              ]
+            }
+          },
+          "action": {
+            "type": "string",
+            "title": "Action",
+            "format": "textarea",
+            "minLength": 1
+          },
+          "owner": {
+            "type": "object",
+            "title": "Owner",
+            "properties": {
+              "_id": {
+                "type": "string"
+              }
+            },
+            "x-lookup": {
+              "collection": "$users",
+              "displayField": "name",
+              "searchFields": [
+                "name",
+                "email"
+              ]
+            }
+          },
+          "due_date": {
+            "type": "string",
+            "title": "Due date",
+            "format": "date"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "enum": [
+              "open",
+              "in_progress",
+              "done"
+            ],
+            "x-default": "open",
+            "x-transitions": {
+              "open": {
+                "in_progress": [
+                  "employee",
+                  "manager",
+                  "hse"
+                ],
+                "done": [
+                  "employee",
+                  "manager",
+                  "hse"
+                ]
+              },
+              "in_progress": {
+                "done": [
+                  "employee",
+                  "manager",
+                  "hse"
+                ],
+                "open": [
+                  "employee",
+                  "manager",
+                  "hse"
+                ]
+              },
+              "done": {
+                "in_progress": [
+                  "manager",
+                  "hse"
+                ]
+              }
+            }
+          },
+          "completed_at": {
+            "type": "string",
+            "title": "Completed",
+            "format": "date",
+            "x-hidden": true
+          }
+        }
+      },
+      "listFields": [
+        "action_no",
+        "action",
+        "incident",
+        "owner",
+        "due_date",
+        "status"
+      ],
+      "searchFields": [
+        "action",
+        "action_no"
+      ],
+      "defaultSort": {
+        "due_date": 1
+      },
+      "conditionalFormats": [
+        {
+          "when": "status == 'done'",
+          "fields": [
+            "status"
+          ],
+          "color": "green",
+          "as": "badge"
+        },
+        {
+          "when": "status == 'in_progress'",
+          "fields": [
+            "status"
+          ],
+          "color": "blue",
+          "as": "badge"
+        },
+        {
+          "when": "status == 'open'",
+          "fields": [
+            "status"
+          ],
+          "color": "amber",
+          "as": "badge"
+        }
+      ],
+      "x-rules": [
+        {
+          "when": "status == 'done'",
+          "set": {
+            "completed_at": "$TODAY"
+          }
+        }
+      ],
+      "triggers": [
+        {
+          "name": "Action due",
+          "on": "schedule",
+          "schedule": {
+            "field": "due_date",
+            "offsetDays": 0
+          },
+          "when": "status !== 'done'",
+          "notify": {
+            "to": "owner",
+            "subject": "Corrective action due today: $(action)",
+            "body": "Action $(action_no) for incident $(incident.incident_no) is due today."
+          }
+        }
+      ]
+    }
+  },
+  "pages": {
+    "dashboard": {
+      "title": "Overview",
+      "icon": "layout-dashboard",
+      "layout": {
+        "cols": 4
+      },
+      "components": [
+        {
+          "group": "Key Metrics",
+          "cols": 4,
+          "components": [
+            {
+              "type": "stat",
+              "title": "Open Incidents",
+              "icon": "shield-alert",
+              "collection": "incidents",
+              "aggregate": "count",
+              "query": {
+                "status": {
+                  "$nin": [
+                    "closed",
+                    "rejected"
+                  ]
+                }
+              },
+              "width": "1"
+            },
+            {
+              "type": "stat",
+              "title": "Critical",
+              "icon": "flame",
+              "collection": "incidents",
+              "aggregate": "count",
+              "query": {
+                "severity": "critical",
+                "status": {
+                  "$nin": [
+                    "closed",
+                    "rejected"
+                  ]
+                }
+              },
+              "width": "1"
+            },
+            {
+              "type": "stat",
+              "title": "Overdue",
+              "icon": "alert-triangle",
+              "collection": "incidents",
+              "aggregate": "count",
+              "query": {
+                "overdue": 1,
+                "status": {
+                  "$nin": [
+                    "closed",
+                    "rejected"
+                  ]
+                }
+              },
+              "width": "1"
+            },
+            {
+              "type": "stat",
+              "title": "Open Actions",
+              "icon": "list-checks",
+              "collection": "corrective_actions",
+              "aggregate": "count",
+              "query": {
+                "status": {
+                  "$ne": "done"
+                }
+              },
+              "width": "1"
+            }
+          ]
+        },
+        {
+          "group": "Incident Analysis",
+          "cols": 4,
+          "components": [
+            {
+              "type": "chart",
+              "title": "By Severity",
+              "collection": "incidents",
+              "chartType": "bar",
+              "groupBy": "severity",
+              "query": {
+                "status": {
+                  "$nin": [
+                    "closed",
+                    "rejected"
+                  ]
+                }
+              },
+              "width": "2",
+              "height": 280,
+              "colors": [
+                "#ef4444",
+                "#f97316",
+                "#eab308",
+                "#f59e0b",
+                "#fbbf24"
+              ]
+            },
+            {
+              "type": "chart",
+              "title": "By Category",
+              "collection": "incidents",
+              "chartType": "donut",
+              "groupBy": "category",
+              "query": {
+                "status": {
+                  "$nin": [
+                    "closed",
+                    "rejected"
+                  ]
+                }
+              },
+              "width": "2",
+              "height": 280
+            },
+            {
+              "type": "chart",
+              "title": "Status Distribution",
+              "collection": "incidents",
+              "chartType": "bar-horizontal",
+              "groupBy": "status",
+              "width": "2",
+              "height": 280
+            },
+            {
+              "type": "chart",
+              "title": "Incidents Over Time",
+              "collection": "incidents",
+              "chartType": "area",
+              "groupBy": "due_date",
+              "dateGranularity": "week",
+              "width": "2",
+              "height": 280
+            }
+          ]
+        },
+        {
+          "group": "Action Tracking",
+          "cols": 4,
+          "components": [
+            {
+              "type": "table",
+              "title": "Due Soon (Next 7 Days)",
+              "collection": "corrective_actions",
+              "columns": [
+                "action_no",
+                "action",
+                "incident",
+                "owner",
+                "due_date",
+                "status"
+              ],
+              "query": {
+                "due_date": {
+                  "$gte": "$TODAY",
+                  "$lte": "$DAYS_AGO:-7"
+                },
+                "status": {
+                  "$ne": "done"
+                }
+              },
+              "sort": {
+                "due_date": 1
+              },
+              "limit": 10,
+              "width": "2"
+            },
+            {
+              "type": "table",
+              "title": "Action Summary by Status",
+              "collection": "corrective_actions",
+              "columns": [
+                "action_no",
+                "action",
+                "status",
+                "due_date",
+                "owner"
+              ],
+              "sort": {
+                "status": 1,
+                "due_date": 1
+              },
+              "width": "2"
+            }
+          ]
+        },
+        {
+          "group": "Urgent Items",
+          "cols": 4,
+          "components": [
+            {
+              "type": "table",
+              "title": "Overdue Incidents",
+              "collection": "incidents",
+              "columns": [
+                "incident_no",
+                "title",
+                "severity",
+                "assigned_to",
+                "due_date"
+              ],
+              "query": {
+                "overdue": 1,
+                "status": {
+                  "$nin": [
+                    "closed",
+                    "rejected"
+                  ]
+                }
+              },
+              "sort": {
+                "due_date": 1
+              },
+              "width": "2"
+            },
+            {
+              "type": "table",
+              "title": "Critical Open Incidents",
+              "collection": "incidents",
+              "columns": [
+                "incident_no",
+                "title",
+                "category",
+                "assigned_to",
+                "status"
+              ],
+              "query": {
+                "severity": "critical",
+                "status": {
+                  "$nin": [
+                    "closed",
+                    "rejected"
+                  ]
+                }
+              },
+              "sort": {
+                "_createdAt": -1
+              },
+              "width": "2"
+            }
+          ]
+        },
+        {
+          "group": "Recent Activity",
+          "cols": 4,
+          "components": [
+            {
+              "type": "table",
+              "title": "Latest Incidents",
+              "collection": "incidents",
+              "columns": [
+                "incident_no",
+                "title",
+                "category",
+                "severity",
+                "status",
+                "days_open"
+              ],
+              "sort": {
+                "_createdAt": -1
+              },
+              "limit": 10,
+              "width": "4"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

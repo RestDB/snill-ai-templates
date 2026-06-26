@@ -86,6 +86,35 @@
       "authorUrl": "https://snill.ai",
       "version": "1.1.0",
       "updatedAt": "2026-06-23"
+    },
+    {
+      "id": "incident",
+      "name": "Incident Reporting",
+      "description": "Report incidents and deviations with AI photo scanning, severity triage, a review workflow, linked corrective actions and an HSE compliance dashboard.",
+      "category": "Health, Safety & Compliance",
+      "tags": ["incidents", "hse", "deviations", "corrective actions", "compliance", "ai"],
+      "icon": "shield-alert",
+      "screenshot": "templates/incident/screenshot.png",
+      "screenshotCaption": "The HSE overview dashboard — open, critical and overdue incident counts, severity and category charts, and corrective-action tracking.",
+      "path": "templates/incident",
+      "collections": ["incidents", "corrective_actions"],
+      "features": [
+        "Snap a photo or upload a PDF and let AI fill in the incident report",
+        "Severity triage (low → critical) with color-coded badges and overdue row highlighting",
+        "Role-based review workflow: new → under review → in progress → resolved → closed",
+        "Corrective actions linked to each incident, with owners, due dates and due/overdue alerts",
+        "HSE compliance dashboard: open, critical and overdue incidents, charts and urgent items"
+      ],
+      "screenshots": [
+        { "src": "templates/incident/screenshot-2.png", "caption": "The incidents register — color-coded severity and status badges, quick filters (Hide closed, Critical, Overdue) and search." },
+        { "src": "templates/incident/screenshot-3.png", "caption": "Incident detail — photo evidence, the new → under review → in progress → resolved → closed workflow, and the investigation and root-cause record." },
+        { "src": "templates/incident/screenshot-4.png", "caption": "Report an incident fast — drop a photo or PDF, or hit 'Scan / upload to fill' to let AI draft the report." },
+        { "src": "templates/incident/screenshot-5.png", "caption": "The AI reads the photo and auto-fills the report: title, category, severity, location and what happened — ready to review and save." }
+      ],
+      "author": "snill",
+      "authorUrl": "https://snill.ai",
+      "version": "1.0.0",
+      "updatedAt": "2026-06-26"
     }
   ]
 }
