@@ -3,7 +3,7 @@
     "title": "Incident Reporting",
     "subtitle": "Deviations, corrective actions & compliance",
     "icon": "shield-alert",
-    "theme": "nlan",
+    "theme": "neutral",
     "startPage": "dashboard",
     "roles": [
       "employee",
@@ -15,6 +15,13 @@
         {
           "label": "Main",
           "items": [
+            {
+              "type": "button",
+              "label": "New Incident",
+              "action": "create",
+              "collection": "incidents",
+              "icon": "plus"
+            },
             {
               "type": "collection",
               "collection": "incidents",
@@ -76,7 +83,7 @@
           "location"
         ],
         "instruction": "Extract a concise incident title, the category, a severity, what happened, and where. If a severity is not stated, infer it conservatively.",
-        "model": "sonnet"
+        "model": "haiku"
       },
       "schema": {
         "type": "object",
