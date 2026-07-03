@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Consulting",
+    "title": "Consulting 2.0",
     "subtitle": "Client & Project Management",
     "sidebar": {
       "groups": [
@@ -68,7 +68,7 @@
       ]
     },
     "startPage": "dashboard",
-    "iconColor": null,
+    "iconColor": "#F16A47",
     "icon": "users",
     "roles": [
       "consultant"
@@ -243,10 +243,18 @@
           ],
           "sort": {
             "date": -1
-          }
+          },
+          "listSummary": [
+            {
+              "field": "hours",
+              "aggregate": "sum"
+            }
+          ]
         }
       ],
-      "ownerAccess": "own-modify"
+      "ownerAccess": "own-modify",
+      "showReferences": true,
+      "referencesLabel": "References"
     },
     "clients": {
       "label": "Clients",
@@ -255,6 +263,7 @@
       "listFields": [
         "name",
         "email",
+        "invoice_amount_this_month",
         "phone",
         "status"
       ],
@@ -303,6 +312,20 @@
             "type": "string",
             "format": "textarea",
             "title": "Notes"
+          },
+          "invoice_amount_this_month": {
+            "type": "number",
+            "format": "currency",
+            "title": "Invoice Amount (This Month)",
+            "x-calculate": "SUM(projects.billable_hours_this_month)",
+            "x-currency": "NOK"
+          },
+          "invoice_amount_last_month": {
+            "type": "number",
+            "format": "currency",
+            "title": "Invoice Amount (Last Month)",
+            "x-calculate": "SUM(projects.billable_hours_last_month)",
+            "x-currency": "NOK"
           }
         },
         "required": [
@@ -319,6 +342,14 @@
               "phone",
               "company",
               "status"
+            ],
+            "cols": 2
+          },
+          {
+            "label": "Invoice Amounts",
+            "fields": [
+              "invoice_amount_this_month",
+              "invoice_amount_last_month"
             ],
             "cols": 2
           },
@@ -340,6 +371,8 @@
           "displayFields": [
             "name",
             "status",
+            "billable_hours_last_month",
+            "billable_hours_this_month",
             "start_date"
           ],
           "allowCreate": true,
@@ -348,7 +381,13 @@
           }
         }
       ],
-      "ownerAccess": "own-modify"
+      "ownerAccess": "own-modify",
+      "listSummary": [
+        {
+          "field": "invoice_amount_this_month",
+          "aggregate": "sum"
+        }
+      ]
     },
     "projects": {
       "label": "Projects",
@@ -461,6 +500,28 @@
             "minimum": 0,
             "x-currency": "NOK",
             "default": 1200
+          },
+          "billable_hours": {
+            "type": "number",
+            "title": "Billable Hours",
+            "x-calculate": "SUM(time_entries.hours, billable == true)",
+            "x-hidden": false
+          },
+          "billable_hours_this_month": {
+            "type": "number",
+            "format": "currency",
+            "title": "Billable Amount (This Month)",
+            "x-calculate": "SUM(time_entries.amount, billable == true && YEAR(date) == YEAR($TODAY) && MONTH(date) == MONTH($TODAY))",
+            "x-hidden": false,
+            "x-currency": "NOK"
+          },
+          "billable_hours_last_month": {
+            "type": "number",
+            "format": "currency",
+            "title": "Billable Amount (Last Month)",
+            "x-calculate": "SUM(time_entries.amount, billable == true && YEAR(date) == YEAR(DATEADD($TODAY, -1, 'months')) && MONTH(date) == MONTH(DATEADD($TODAY, -1, 'months')))",
+            "x-hidden": false,
+            "x-currency": "NOK"
           }
         },
         "required": [
@@ -486,13 +547,18 @@
           },
           {
             "label": "Budget & Rates",
+            "collapsible": true,
+            "collapsed": true,
             "fields": [
               "budget",
               "junior_rate",
               "standard_rate",
               "senior_rate",
               "total_hours",
-              "total_billable"
+              "total_billable",
+              "billable_hours",
+              "billable_hours_this_month",
+              "billable_hours_last_month"
             ],
             "cols": 2
           },
@@ -530,6 +596,26 @@
             {
               "field": "amount",
               "aggregate": "sum"
+            }
+          ],
+          "filters": [
+            {
+              "field": "date",
+              "value": {
+                "$gte": "$MONTH_START",
+                "$lte": "$MONTH_END"
+              },
+              "label": "This Month",
+              "active": false
+            },
+            {
+              "field": "date",
+              "value": {
+                "$gte": "$LAST_MONTH_START",
+                "$lte": "$LAST_MONTH_END"
+              },
+              "label": "Last Month",
+              "active": false
             }
           ]
         },
@@ -815,7 +901,8 @@
           }
         ]
       },
-      "ownerAccess": "own-modify"
+      "ownerAccess": "own-modify",
+      "referencesLabel": "Time Entries"
     }
   },
   "pages": {
@@ -874,7 +961,7 @@
           "type": "chart",
           "title": "Billable Amount by Project",
           "collection": "time_entries",
-          "chartType": "bar",
+          "chartType": "bar-horizontal",
           "groupBy": "project",
           "aggregate": "sum",
           "field": "amount",
@@ -884,13 +971,14 @@
               "$lte": "$MONTH_END"
             }
           },
+          "height": 400,
           "width": "2"
         },
         {
           "type": "chart",
           "title": "Billable Amount by Consultant",
           "collection": "time_entries",
-          "chartType": "bar",
+          "chartType": "bar-horizontal",
           "groupBy": "consultant",
           "aggregate": "sum",
           "field": "amount",
@@ -900,7 +988,8 @@
               "$lte": "$MONTH_END"
             }
           },
-          "width": "2"
+          "width": "2",
+          "height": 400
         },
         {
           "type": "table",
@@ -934,7 +1023,11 @@
           "title": "Billable Hours & Revenue by Client, Project & Consultant",
           "collection": "time_entries",
           "query": {
-            "billable": true
+            "billable": true,
+            "date": {
+              "$gte": "$param.dateFrom",
+              "$lte": "$param.dateTo"
+            }
           },
           "groupBy": [
             "project.client.name",
@@ -947,6 +1040,20 @@
           ],
           "showGrandTotal": true,
           "width": "1"
+        }
+      ],
+      "params": [
+        {
+          "key": "dateFrom",
+          "type": "date",
+          "label": "From Date",
+          "default": "$MONTH_START"
+        },
+        {
+          "key": "dateTo",
+          "type": "date",
+          "label": "To Date",
+          "default": "$MONTH_END"
         }
       ]
     },
