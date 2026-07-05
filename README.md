@@ -38,6 +38,7 @@ customizing from there.
 └── templates/
     └── <id>/
         ├── datamodel.json          # the app definition (required)
+        ├── README.md               # admin/setup guide for this app (recommended)
         └── screenshot.png          # preview image shown in the picker (optional)
 ```
 
@@ -104,9 +105,11 @@ protected, so all changes (ours included) go through a PR.
    and optionally `pages` and `tours`).
 3. Optionally add `screenshot.png` showing the app — plus any extra preview images
    (e.g. `screenshot-2.png`), listed as `{ src, caption }` objects in `screenshots`.
-4. Add an entry to `templates.json` with `id` matching the folder name — optionally
+4. Add a `README.md` describing the app: its collections, the roles to set up, base
+   data to fill, constraints, and any status workflow, triggers and notifications.
+5. Add an entry to `templates.json` with `id` matching the folder name — optionally
    with `features`, a `screenshotCaption`, and `screenshots`.
-5. Open a PR.
+6. Open a PR.
 
 ### Keep templates clean
 
