@@ -39,6 +39,20 @@
               "label": "Expense Items"
             }
           ]
+        },
+        {
+          "label": "Docs",
+          "items": [
+            {
+              "type": "link",
+              "label": "Readme",
+              "href": "https://github.com/RestDB/snill-ai-templates/blob/main/templates/expense/README.md",
+              "external": true
+            }
+          ],
+          "roleAccess": [
+            "admin"
+          ]
         }
       ]
     },

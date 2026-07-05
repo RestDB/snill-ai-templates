@@ -64,6 +64,20 @@
               "icon": "file-text"
             }
           ]
+        },
+        {
+          "label": "Docs",
+          "items": [
+            {
+              "type": "link",
+              "label": "Readme",
+              "href": "https://github.com/RestDB/snill-ai-templates/blob/main/templates/consulting/README.md",
+              "external": true
+            }
+          ],
+          "roleAccess": [
+            "admin"
+          ]
         }
       ]
     },
