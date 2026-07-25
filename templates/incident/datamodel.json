@@ -96,8 +96,7 @@
           "description",
           "location"
         ],
-        "instruction": "Extract a concise incident title, the category, a severity, what happened, and where. If a severity is not stated, infer it conservatively.",
-        "model": "haiku"
+        "instruction": "Extract a concise incident title, the category, a severity, what happened, and where. If a severity is not stated, infer it conservatively."
       },
       "schema": {
         "type": "object",
