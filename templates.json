@@ -57,6 +57,53 @@
       "updatedAt": "2026-06-23"
     },
     {
+      "id": "consulting-psa",
+      "name": "Consulting PSA",
+      "description": "Run a consultancy's whole core business: CRM & sales pipeline, projects with tasks & milestones, time & expense tracking, invoicing with AR, and project profitability.",
+      "category": "Professional Services",
+      "tags": [
+        "consulting",
+        "agency",
+        "crm",
+        "psa",
+        "pipeline",
+        "projects",
+        "time tracking",
+        "invoicing",
+        "expenses"
+      ],
+      "icon": "briefcase",
+      "path": "templates/consulting-psa",
+      "collections": [
+        "clients",
+        "contacts",
+        "opportunities",
+        "activities",
+        "consultants",
+        "projects",
+        "project_team",
+        "milestones",
+        "tasks",
+        "time_entries",
+        "expenses",
+        "invoices",
+        "invoice_lines"
+      ],
+      "features": [
+        "CRM: contacts, activities, and a sales pipeline with a stage workflow and weighted value",
+        "Won opportunity → project handoff, with milestones and tasks for delivery",
+        "Billable time tracking with a draft → submitted → approved workflow",
+        "Expense tracking with AI receipt scanning (drop a PDF or photo to auto-fill)",
+        "Invoicing & accounts receivable: line items, VAT, and a draft → sent → paid/overdue workflow",
+        "Project profitability: labour + expense cost, margin and margin %",
+        "Dashboards for pipeline, accounts receivable, and profitability"
+      ],
+      "author": "snill",
+      "authorUrl": "https://snill.ai",
+      "version": "1.0.0",
+      "updatedAt": "2026-08-01"
+    },
+    {
       "id": "expense",
       "name": "Expense",
       "description": "Employee expense tracking and approval, with AI receipt scanning, itemized line items and a ready-made dashboard.",
@@ -162,12 +209,22 @@
       "name": "Incident Reporting",
       "description": "Report incidents and deviations with AI photo scanning, severity triage, a review workflow, linked corrective actions and an HSE compliance dashboard.",
       "category": "Health, Safety & Compliance",
-      "tags": ["incidents", "hse", "deviations", "corrective actions", "compliance", "ai"],
+      "tags": [
+        "incidents",
+        "hse",
+        "deviations",
+        "corrective actions",
+        "compliance",
+        "ai"
+      ],
       "icon": "shield-alert",
       "screenshot": "templates/incident/screenshot.png",
       "screenshotCaption": "The HSE overview dashboard — open, critical and overdue incident counts, severity and category charts, and corrective-action tracking.",
       "path": "templates/incident",
-      "collections": ["incidents", "corrective_actions"],
+      "collections": [
+        "incidents",
+        "corrective_actions"
+      ],
       "features": [
         "Snap a photo or upload a PDF and let AI fill in the incident report",
         "Severity triage (low → critical) with color-coded badges and overdue row highlighting",
@@ -176,10 +233,22 @@
         "HSE compliance dashboard: open, critical and overdue incidents, charts and urgent items"
       ],
       "screenshots": [
-        { "src": "templates/incident/screenshot-2.png", "caption": "The incidents register — color-coded severity and status badges, quick filters (Hide closed, Critical, Overdue) and search." },
-        { "src": "templates/incident/screenshot-3.png", "caption": "Incident detail — photo evidence, the new → under review → in progress → resolved → closed workflow, and the investigation and root-cause record." },
-        { "src": "templates/incident/screenshot-4.png", "caption": "Report an incident fast — drop a photo or PDF, or hit 'Scan / upload to fill' to let AI draft the report." },
-        { "src": "templates/incident/screenshot-5.png", "caption": "The AI reads the photo and auto-fills the report — title, category, severity, location and what happened — and attaches the photo, ready to review and save." }
+        {
+          "src": "templates/incident/screenshot-2.png",
+          "caption": "The incidents register — color-coded severity and status badges, quick filters (Hide closed, Critical, Overdue) and search."
+        },
+        {
+          "src": "templates/incident/screenshot-3.png",
+          "caption": "Incident detail — photo evidence, the new → under review → in progress → resolved → closed workflow, and the investigation and root-cause record."
+        },
+        {
+          "src": "templates/incident/screenshot-4.png",
+          "caption": "Report an incident fast — drop a photo or PDF, or hit 'Scan / upload to fill' to let AI draft the report."
+        },
+        {
+          "src": "templates/incident/screenshot-5.png",
+          "caption": "The AI reads the photo and auto-fills the report — title, category, severity, location and what happened — and attaches the photo, ready to review and save."
+        }
       ],
       "author": "snill",
       "authorUrl": "https://snill.ai",
