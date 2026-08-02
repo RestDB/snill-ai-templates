@@ -73,6 +73,8 @@
         "expenses"
       ],
       "icon": "briefcase",
+      "screenshot": "templates/consulting-psa/screenshot.png",
+      "screenshotCaption": "The Consulting PSA dashboard — active clients, projects and consultants, hours this month, and billable amounts by project and consultant.",
       "path": "templates/consulting-psa",
       "collections": [
         "clients",
@@ -97,6 +99,24 @@
         "Invoicing & accounts receivable: line items, VAT, and a draft → sent → paid/overdue workflow",
         "Project profitability: labour + expense cost, margin and margin %",
         "Dashboards for pipeline, accounts receivable, and profitability"
+      ],
+      "screenshots": [
+        {
+          "src": "templates/consulting-psa/screenshot-2.png",
+          "caption": "Sales pipeline — total and weighted pipeline value, deals by stage, and opportunities grouped by stage and client."
+        },
+        {
+          "src": "templates/consulting-psa/screenshot-3.png",
+          "caption": "Delivery board — project tasks on a drag-and-drop Kanban across To do, In progress, Blocked and Done, with priority and due dates."
+        },
+        {
+          "src": "templates/consulting-psa/screenshot-4.png",
+          "caption": "Profitability — total margin, plus billable vs cost vs expenses and margin for every project."
+        },
+        {
+          "src": "templates/consulting-psa/screenshot-5.png",
+          "caption": "A project record — client, dates and tier rates, with rolled-up hours and billable amount and its linked time, team, tasks and expenses."
+        }
       ],
       "author": "snill",
       "authorUrl": "https://snill.ai",
