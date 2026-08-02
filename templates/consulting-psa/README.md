@@ -25,7 +25,8 @@ The connected loop, left to right:
    `opportunities` through a stage workflow (lead → qualified → proposal →
    negotiation → won / lost), and log **activities** (calls, meetings, follow‑ups).
 2. **Win → deliver** — a won opportunity links to its **project**; break the project
-   into **milestones** and **tasks** (assignee, status, priority).
+   into **milestones** and **tasks** (assignee, status, priority) — tasks have a
+   **Kanban board** (drag between status columns).
 3. **Track** — log **time entries** (billable amount auto‑calculated from the
    consultant's rate level and the project's tier rates) and **expenses** (scan a
    receipt to auto‑fill it).
@@ -48,9 +49,9 @@ The connected loop, left to right:
 | `projects` | Engagements — tier rates, rollups, **margin** | `client` → clients |
 | `project_team` | Who staffs a project, at what tier | `project`, `consultant` |
 | `milestones` | Project milestones | `project` |
-| `tasks` | Project tasks | `project`, `milestone`, `assignee` |
+| `tasks` | Project tasks — **Kanban board** by status | `project`, `milestone`, `assignee` |
 | `time_entries` | Logged hours (billable amount + labour cost) | `project`, `consultant` |
-| `expenses` | Billable / reimbursable costs, with **receipt scanning** | `project`, `consultant` |
+| `expenses` | Billable / reimbursable costs, with **receipt scanning**; a consultant sees their own via the **My Expenses** filter and their profile | `project`, `consultant` |
 | `invoices` | Accounts receivable — VAT, status workflow | `client`, `project`, `billing_contact` |
 | `invoice_lines` | Invoice line items | `invoice`, `time_entry`, `expense` |
 

@@ -15,6 +15,13 @@
               "icon": "plus"
             },
             {
+              "type": "button",
+              "label": "New Expense",
+              "action": "create",
+              "collection": "expenses",
+              "icon": "wallet"
+            },
+            {
               "type": "divider"
             },
             {
@@ -302,7 +309,7 @@
             "cols": 1
           },
           {
-            "label": "CV - R\u00e9sum\u00e9",
+            "label": "CV - Résumé",
             "collapsible": true,
             "collapsed": true,
             "fields": [
@@ -340,6 +347,45 @@
           ],
           "sort": {
             "date": -1
+          }
+        },
+        {
+          "collection": "expenses",
+          "foreignKey": "consultant._id",
+          "title": "Expenses",
+          "displayFields": [
+            "date",
+            "description",
+            "category",
+            "amount",
+            "billable",
+            "reimbursable"
+          ],
+          "allowCreate": true,
+          "sort": {
+            "date": -1
+          },
+          "listSummary": [
+            {
+              "field": "amount",
+              "aggregate": "sum"
+            }
+          ]
+        },
+        {
+          "collection": "tasks",
+          "foreignKey": "assignee._id",
+          "title": "Assigned Tasks",
+          "displayFields": [
+            "title",
+            "project",
+            "status",
+            "priority",
+            "due_date"
+          ],
+          "allowCreate": false,
+          "sort": {
+            "due_date": 1
           }
         }
       ],
@@ -2113,7 +2159,21 @@
           }
         ]
       },
-      "ownerAccess": "own-modify"
+      "ownerAccess": "own-modify",
+      "kanban": {
+        "field": "status",
+        "card": {
+          "title": "title",
+          "subtitle": "project",
+          "badges": [
+            "priority"
+          ],
+          "fields": [
+            "due_date"
+          ],
+          "avatar": "assignee"
+        }
+      }
     },
     "expenses": {
       "label": "Expenses",
@@ -2257,7 +2317,36 @@
         "fileField": "receipt",
         "instruction": "Extract the vendor, date, total amount and category from the receipt."
       },
-      "ownerAccess": "own-modify"
+      "ownerAccess": "own-modify",
+      "listFilters": [
+        {
+          "field": "consultant._id",
+          "value": "$loggedOnUser",
+          "label": "My Expenses",
+          "active": false
+        },
+        {
+          "field": "billable",
+          "value": true,
+          "label": "Billable",
+          "active": false
+        },
+        {
+          "field": "reimbursable",
+          "value": true,
+          "label": "Reimbursable",
+          "active": false
+        },
+        {
+          "field": "date",
+          "value": {
+            "$gte": "$MONTH_START",
+            "$lte": "$MONTH_END"
+          },
+          "label": "This Month",
+          "active": false
+        }
+      ]
     }
   },
   "pages": {
@@ -2611,7 +2700,7 @@
       "steps": [
         {
           "target": "data-assistant",
-          "message": "Hi! I'm Snill, your AI assistant \u2014 I'll show you around in 6 quick steps."
+          "message": "Hi! I'm Snill, your AI assistant — I'll show you around in 6 quick steps."
         },
         {
           "navigate": "/",
@@ -2621,7 +2710,7 @@
         {
           "navigate": "/projects",
           "target": "collection:projects",
-          "message": "All your projects live here \u2014 track status, budget, and total billable hours."
+          "message": "All your projects live here — track status, budget, and total billable hours."
         },
         {
           "navigate": "/time_entries",
@@ -2639,7 +2728,7 @@
         },
         {
           "target": "data-assistant",
-          "message": "That's it! Ask me anything \u2014 'show me project totals', 'add a consultant', 'what's this month's revenue' \u2014 I'm right here to help."
+          "message": "That's it! Ask me anything — 'show me project totals', 'add a consultant', 'what's this month's revenue' — I'm right here to help."
         }
       ]
     },
@@ -2684,7 +2773,7 @@
         },
         {
           "target": "data-assistant",
-          "message": "Done! Save your entry and ask me if you need help \u2014 'show my entries', 'what's my billable total' \u2014 I'm here."
+          "message": "Done! Save your entry and ask me if you need help — 'show my entries', 'what's my billable total' — I'm here."
         }
       ]
     }
