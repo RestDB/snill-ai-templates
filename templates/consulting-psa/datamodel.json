@@ -229,7 +229,7 @@
             "format": "currency",
             "title": "Internal cost / hour",
             "minimum": 0,
-            "x-currency": "NOK"
+            "x-currency": "EUR"
           },
           "skills": {
             "type": "string",
@@ -608,7 +608,7 @@
             "format": "currency",
             "title": "Budget (Optional)",
             "minimum": 0,
-            "x-currency": "NOK"
+            "x-currency": "EUR"
           },
           "total_hours": {
             "type": "number",
@@ -622,28 +622,28 @@
             "title": "Total Billable",
             "x-calculate": "SUM(time_entries.amount)",
             "x-hidden": false,
-            "x-currency": "NOK"
+            "x-currency": "EUR"
           },
           "total_cost": {
             "type": "number",
             "format": "currency",
             "title": "Total Cost",
             "x-calculate": "SUM(time_entries.cost)",
-            "x-currency": "NOK"
+            "x-currency": "EUR"
           },
           "total_expenses": {
             "type": "number",
             "format": "currency",
             "title": "Total Expenses",
             "x-calculate": "SUM(expenses.amount)",
-            "x-currency": "NOK"
+            "x-currency": "EUR"
           },
           "margin": {
             "type": "number",
             "format": "currency",
             "title": "Margin",
             "x-calculate": "total_billable - total_cost - total_expenses",
-            "x-currency": "NOK"
+            "x-currency": "EUR"
           },
           "margin_pct": {
             "type": "number",
@@ -656,7 +656,7 @@
             "format": "currency",
             "title": "Junior Rate",
             "minimum": 0,
-            "x-currency": "NOK",
+            "x-currency": "EUR",
             "default": 650
           },
           "standard_rate": {
@@ -664,7 +664,7 @@
             "format": "currency",
             "title": "Standard Rate",
             "minimum": 0,
-            "x-currency": "NOK",
+            "x-currency": "EUR",
             "default": 900
           },
           "senior_rate": {
@@ -672,7 +672,7 @@
             "format": "currency",
             "title": "Senior Rate",
             "minimum": 0,
-            "x-currency": "NOK",
+            "x-currency": "EUR",
             "default": 1200
           }
         },
@@ -883,14 +883,14 @@
             "format": "currency",
             "title": "Amount",
             "x-calculate": "hours * IF(consultant.hourly_rate == 'Junior', project.junior_rate, IF(consultant.hourly_rate == 'Standard', project.standard_rate, project.senior_rate))",
-            "x-currency": "NOK"
+            "x-currency": "EUR"
           },
           "cost": {
             "type": "number",
             "format": "currency",
             "title": "Labor cost",
             "x-calculate": "hours * consultant.cost_rate",
-            "x-currency": "NOK"
+            "x-currency": "EUR"
           },
           "status": {
             "type": "string",
@@ -1328,7 +1328,7 @@
             "format": "currency",
             "title": "Deal value",
             "minimum": 0,
-            "x-currency": "NOK"
+            "x-currency": "EUR"
           },
           "probability": {
             "type": "number",
@@ -1342,7 +1342,7 @@
             "format": "currency",
             "title": "Weighted Value",
             "x-calculate": "value * probability / 100",
-            "x-currency": "NOK"
+            "x-currency": "EUR"
           },
           "expected_close": {
             "type": "string",
@@ -1698,21 +1698,21 @@
             "format": "currency",
             "title": "Subtotal",
             "x-calculate": "SUM(invoice_lines.amount)",
-            "x-currency": "NOK"
+            "x-currency": "EUR"
           },
           "tax_amount": {
             "type": "number",
             "format": "currency",
             "title": "Tax Amount",
             "x-calculate": "subtotal * tax_rate / 100",
-            "x-currency": "NOK"
+            "x-currency": "EUR"
           },
           "total": {
             "type": "number",
             "format": "currency",
             "title": "Total",
             "x-calculate": "subtotal + tax_amount",
-            "x-currency": "NOK"
+            "x-currency": "EUR"
           },
           "paid_date": {
             "type": "string",
@@ -1857,14 +1857,14 @@
             "type": "number",
             "format": "currency",
             "title": "Unit Price",
-            "x-currency": "NOK"
+            "x-currency": "EUR"
           },
           "amount": {
             "type": "number",
             "format": "currency",
             "title": "Amount",
             "x-calculate": "quantity * unit_price",
-            "x-currency": "NOK"
+            "x-currency": "EUR"
           },
           "time_entry": {
             "type": "object",
@@ -2207,7 +2207,7 @@
             "format": "currency",
             "title": "Amount",
             "minimum": 0,
-            "x-currency": "NOK"
+            "x-currency": "EUR"
           },
           "category": {
             "type": "string",
