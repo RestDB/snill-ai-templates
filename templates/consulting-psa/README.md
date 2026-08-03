@@ -22,8 +22,9 @@ what agencies usually pay several SaaS tools for.
 The connected loop, left to right:
 
 1. **Sell** — track **contacts** at each client, run a **sales pipeline** of
-   `opportunities` through a stage workflow (lead → qualified → proposal →
-   negotiation → won / lost), and log **activities** (calls, meetings, follow‑ups).
+   `opportunities` on a drag‑and‑drop **Kanban board** (lead → qualified → proposal →
+   negotiation → won / lost), each carrying a **next step**, weighted value and
+   reminders; and log **activities** (calls, meetings, follow‑ups).
 2. **Win → deliver** — a won opportunity links to its **project**; break the project
    into **milestones** and **tasks** (assignee, status, priority) — tasks have a
    **Kanban board** (drag between status columns).
@@ -43,7 +44,7 @@ The connected loop, left to right:
 |---|---|---|
 | `clients` | Customer companies | — |
 | `contacts` | People at a client | `client` → clients |
-| `opportunities` | Sales pipeline (stage workflow, value, weighted value) | `client`, `primary_contact`, `won_project` |
+| `opportunities` | Sales pipeline — **Kanban board**, weighted value, next step, close date | `client`, `primary_contact`, `won_project` |
 | `activities` | Calls / meetings / notes / follow‑up tasks | `client`, `opportunity` |
 | `consultants` | Your people — rate level, **cost rate**, CV | `employee` → user |
 | `projects` | Engagements — tier rates, rollups, **margin** | `client` → clients |
@@ -62,8 +63,11 @@ The connected loop, left to right:
 - `invoices.subtotal` = Σ line amounts; `tax_amount` = subtotal × VAT %; `total` = subtotal + tax.
 - `invoice_lines.amount` = quantity × unit price.
 
+**Sales pipeline** — `opportunities.stage` (lead → qualified → proposal → negotiation →
+won / lost) renders as a **drag‑and‑drop Kanban board**; stages move freely (no gated
+transitions), the way a sales board should.
+
 **Workflows** (`x-transitions` — enforced on save, shown as action buttons)
-- **Opportunity `stage`**: lead → qualified → proposal → negotiation → won / lost.
 - **Invoice `status`**: draft → sent → paid / overdue / cancelled.
 - **Time entry `status`**: draft → submitted → approved.
 
@@ -79,10 +83,12 @@ category into a draft you confirm before saving.
 
 ## Notifications
 
-Two internal reminders keep work on track — both notify the **record owner** (the person
-who created it), by email, via snill's built‑in notifications:
+Internal reminders keep work on track — all notify the **record owner** (the person who
+created it), by email, via snill's built‑in notifications:
 
 - **Follow‑up due** — an activity with a follow‑up date that isn't done yet.
+- **Next step due** — an open opportunity whose next‑step date has arrived.
+- **Deal stalled** — an open opportunity past its expected close date.
 - **Invoice overdue** — an invoice still `sent` past its due date.
 
 > These are **internal** notifications to your own team. Sending messages **to clients**

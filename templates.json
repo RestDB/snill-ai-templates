@@ -92,7 +92,7 @@
         "invoice_lines"
       ],
       "features": [
-        "CRM: contacts, activities, and a sales pipeline with a stage workflow and weighted value",
+        "CRM: contacts, activities, and a drag-and-drop sales pipeline (Kanban) with weighted value, next-step tracking and stalled-deal reminders",
         "Won opportunity → project handoff, with milestones and tasks for delivery",
         "Billable time tracking with a draft → submitted → approved workflow",
         "Expense tracking with AI receipt scanning (drop a PDF or photo to auto-fill)",
@@ -120,7 +120,7 @@
       ],
       "author": "snill",
       "authorUrl": "https://snill.ai",
-      "version": "1.0.1",
+      "version": "1.1.0",
       "updatedAt": "2026-08-03"
     },
     {

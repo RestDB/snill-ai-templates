@@ -1284,44 +1284,7 @@
               "won",
               "lost"
             ],
-            "x-default": "lead",
-            "x-transitions": {
-              "lead": {
-                "qualified": [
-                  "consultant"
-                ],
-                "lost": [
-                  "consultant"
-                ]
-              },
-              "qualified": {
-                "proposal": [
-                  "consultant"
-                ],
-                "lost": [
-                  "consultant"
-                ]
-              },
-              "proposal": {
-                "negotiation": [
-                  "consultant"
-                ],
-                "won": [
-                  "consultant"
-                ],
-                "lost": [
-                  "consultant"
-                ]
-              },
-              "negotiation": {
-                "won": [
-                  "consultant"
-                ],
-                "lost": [
-                  "consultant"
-                ]
-              }
-            }
+            "x-default": "lead"
           },
           "value": {
             "type": "number",
@@ -1348,6 +1311,15 @@
             "type": "string",
             "format": "date",
             "title": "Expected Close"
+          },
+          "next_step": {
+            "type": "string",
+            "title": "Next step"
+          },
+          "next_step_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Next step date"
           },
           "source": {
             "type": "string",
@@ -1376,6 +1348,11 @@
                 "name"
               ]
             }
+          },
+          "close_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Close date"
           },
           "lost_reason": {
             "type": "string",
@@ -1427,9 +1404,59 @@
           "hide": [
             "lost_reason"
           ]
+        },
+        {
+          "when": "stage !== 'won' && stage !== 'lost'",
+          "hide": [
+            "close_date"
+          ]
         }
       ],
-      "ownerAccess": "own-modify"
+      "ownerAccess": "own-modify",
+      "triggers": [
+        {
+          "name": "opportunity-stalled",
+          "on": "schedule",
+          "schedule": {
+            "field": "expected_close",
+            "offsetDays": 7
+          },
+          "when": "stage !== 'won' && stage !== 'lost'",
+          "notify": {
+            "to": "$OWNER",
+            "subject": "Deal stalled — past expected close: $(name)"
+          }
+        },
+        {
+          "name": "opportunity-next-step",
+          "on": "schedule",
+          "schedule": {
+            "field": "next_step_date",
+            "offsetDays": 0
+          },
+          "when": "stage !== 'won' && stage !== 'lost'",
+          "notify": {
+            "to": "$OWNER",
+            "subject": "Next step due: $(name)"
+          }
+        }
+      ],
+      "kanban": {
+        "field": "stage",
+        "card": {
+          "title": "name",
+          "subtitle": "client",
+          "badges": [
+            "source"
+          ],
+          "fields": [
+            "value",
+            "expected_close",
+            "next_step"
+          ],
+          "avatar": "primary_contact"
+        }
+      }
     },
     "activities": {
       "label": "Activities",
@@ -2559,6 +2586,27 @@
           "width": "1"
         },
         {
+          "type": "stat",
+          "title": "Won Value",
+          "collection": "opportunities",
+          "aggregate": "sum",
+          "field": "value",
+          "query": {
+            "stage": "won"
+          },
+          "width": "1"
+        },
+        {
+          "type": "stat",
+          "title": "Lost",
+          "collection": "opportunities",
+          "aggregate": "count",
+          "query": {
+            "stage": "lost"
+          },
+          "width": "1"
+        },
+        {
           "type": "chart",
           "title": "Pipeline Value by Stage",
           "collection": "opportunities",
@@ -2567,6 +2615,16 @@
           "aggregate": "sum",
           "field": "value",
           "width": "4"
+        },
+        {
+          "type": "chart",
+          "title": "Pipeline Value by Source",
+          "collection": "opportunities",
+          "chartType": "bar",
+          "groupBy": "source",
+          "aggregate": "sum",
+          "field": "value",
+          "width": "2"
         },
         {
           "type": "grouped-table",
