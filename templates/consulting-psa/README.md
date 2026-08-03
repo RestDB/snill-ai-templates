@@ -106,7 +106,7 @@ invoicing and approval workflows to them.
    every project; the billable amount depends on them.
 4. **Set each consultant's rate level and `cost_rate`** — rate level picks which project
    rate applies to their time; `cost_rate` (internal cost/hour) drives project margin.
-5. **Check the VAT rate** — `invoices.tax_rate` defaults to 25 (Norway); change per invoice.
+5. **Check the VAT rate** — `invoices.tax_rate` defaults to 25 — set your country's VAT rate per invoice.
 6. **Walk the tours** — `welcome` and `log-time-entry`.
 
 ## Base data to fill (in this order so lookups resolve)
@@ -128,7 +128,7 @@ invoicing and approval workflows to them.
   on a milestone, `invoice` on a line — lock after creation.
 - **Calculated / read‑only** — all rollups and totals above (project margins, invoice
   totals, time amount/cost, weighted value, line amount).
-- **Currency** — amounts default to **NOK** (`x-currency`); change it in the schema editor.
+- **Currency** — amounts default to **EUR** (`x-currency`); change it in the schema editor.
 
 ## What it deliberately does **not** do
 
