@@ -102,8 +102,12 @@
       ],
       "screenshots": [
         {
+          "src": "templates/consulting-psa/screenshot-6.png",
+          "caption": "Sales pipeline — a drag-and-drop Kanban board of opportunities by stage, each card showing deal value, expected close, source and the contact's avatar."
+        },
+        {
           "src": "templates/consulting-psa/screenshot-2.png",
-          "caption": "Sales pipeline — total and weighted pipeline value, deals by stage, and opportunities grouped by stage and client."
+          "caption": "Pipeline analytics — total and weighted pipeline value, won value and lost count, plus deals by stage and by source."
         },
         {
           "src": "templates/consulting-psa/screenshot-3.png",
@@ -115,7 +119,7 @@
         },
         {
           "src": "templates/consulting-psa/screenshot-5.png",
-          "caption": "A project record — client, dates and tier rates, with rolled-up hours and billable amount and its linked time, team, tasks and expenses."
+          "caption": "A project record — client, dates and tier rates in EUR, with rolled-up hours and billable amount and its linked time, team, tasks and expenses."
         }
       ],
       "author": "snill",
