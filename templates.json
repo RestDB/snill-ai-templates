@@ -54,7 +54,14 @@
       "author": "snill",
       "authorUrl": "https://snill.ai",
       "version": "1.0.0",
-      "updatedAt": "2026-06-23"
+      "updatedAt": "2026-06-23",
+      "i18n": {
+        "no": {
+          "name": "Konsulent",
+          "description": "Håndter kunder, konsulenter, prosjekter og fakturerbar timeføring, med et ferdig dashbord.",
+          "category": "Profesjonelle tjenester"
+        }
+      }
     },
     {
       "id": "consulting-psa",
@@ -125,7 +132,14 @@
       "author": "snill",
       "authorUrl": "https://snill.ai",
       "version": "1.1.0",
-      "updatedAt": "2026-08-03"
+      "updatedAt": "2026-08-03",
+      "i18n": {
+        "no": {
+          "name": "Konsulent PSA",
+          "description": "Driv hele kjernevirksomheten i et konsulentselskap: CRM og salgspipeline, prosjekter med oppgaver og milepæler, time- og utleggsføring, fakturering med kundefordringer, og prosjektlønnsomhet.",
+          "category": "Profesjonelle tjenester"
+        }
+      }
     },
     {
       "id": "expense",
@@ -175,7 +189,14 @@
       "author": "snill",
       "authorUrl": "https://snill.ai",
       "version": "1.1.0",
-      "updatedAt": "2026-06-23"
+      "updatedAt": "2026-06-23",
+      "i18n": {
+        "no": {
+          "name": "Utlegg",
+          "description": "Registrering og godkjenning av ansattes utlegg, med AI-skanning av kvitteringer, spesifiserte linjer og et ferdig dashbord.",
+          "category": "Økonomi"
+        }
+      }
     },
     {
       "id": "contracts",
@@ -226,7 +247,14 @@
       "author": "snill",
       "authorUrl": "https://snill.ai",
       "version": "1.1.0",
-      "updatedAt": "2026-06-23"
+      "updatedAt": "2026-06-23",
+      "i18n": {
+        "no": {
+          "name": "Kontrakter",
+          "description": "Hold oversikt over kontrakter, leverandører og fornyelser med AI-dokumentskanning, varsler om oppsigelsesfrister, statusflyt og et etterlevelsesdashbord.",
+          "category": "Juridisk og etterlevelse"
+        }
+      }
     },
     {
       "id": "incident",
@@ -277,7 +305,14 @@
       "author": "snill",
       "authorUrl": "https://snill.ai",
       "version": "1.0.0",
-      "updatedAt": "2026-06-26"
+      "updatedAt": "2026-06-26",
+      "i18n": {
+        "no": {
+          "name": "Avviksrapportering",
+          "description": "Meld avvik og hendelser med AI-fotoskanning, alvorlighetsvurdering, godkjenningsflyt, koblede korrigerende tiltak og et HMS-dashbord.",
+          "category": "HMS og etterlevelse"
+        }
+      }
     }
   ]
 }
