@@ -60,6 +60,56 @@
           "name": "Konsulent",
           "description": "Håndter kunder, konsulenter, prosjekter og fakturerbar timeføring, med et ferdig dashbord.",
           "category": "Profesjonelle tjenester"
+        },
+        "es": {
+          "name": "Consultoría",
+          "description": "Gestiona clientes, consultores, proyectos y el registro de horas facturables, con un panel listo para usar.",
+          "category": "Servicios profesionales"
+        },
+        "de": {
+          "name": "Beratung",
+          "description": "Verwalte Kunden, Beraterinnen und Berater, Projekte und die abrechenbare Zeiterfassung – mit fertigem Dashboard.",
+          "category": "Professionelle Dienstleistungen"
+        },
+        "fr": {
+          "name": "Conseil",
+          "description": "Gérez clients, consultants, projets et suivi du temps facturable, avec un tableau de bord prêt à l’emploi.",
+          "category": "Services professionnels"
+        },
+        "it": {
+          "name": "Consulenza",
+          "description": "Gestisci clienti, consulenti, progetti e la registrazione delle ore fatturabili, con una dashboard pronta all’uso.",
+          "category": "Servizi professionali"
+        },
+        "pt": {
+          "name": "Consultoria",
+          "description": "Gere clientes, consultores, projetos e o registo de horas faturáveis, com um painel pronto a usar.",
+          "category": "Serviços profissionais"
+        },
+        "nl": {
+          "name": "Advies",
+          "description": "Beheer klanten, adviseurs, projecten en declarabele urenregistratie, met een kant-en-klaar dashboard.",
+          "category": "Zakelijke dienstverlening"
+        },
+        "sv": {
+          "name": "Konsult",
+          "description": "Hantera kunder, konsulter, projekt och debiterbar tidrapportering, med en färdig instrumentpanel.",
+          "category": "Professionella tjänster"
+        },
+        "da": {
+          "name": "Konsulent",
+          "description": "Håndtér kunder, konsulenter, projekter og fakturerbar tidsregistrering, med et færdigt dashboard.",
+          "category": "Professionelle tjenester"
+        },
+        "fi": {
+          "name": "Konsultointi",
+          "description": "Hallitse asiakkaita, konsultteja, projekteja ja laskutettavaa työaikaa – valmis koontinäyttö mukana.",
+          "category": "Ammatilliset palvelut"
+        },
+        "pl": {
+          "name": "Doradztwo",
+          "description": "Zarządzaj klientami, konsultantami, projektami i rejestracją godzin do rozliczenia — z gotowym pulpitem.",
+          "category": "Usługi profesjonalne"
         }
       }
     },
@@ -138,6 +188,56 @@
           "name": "Konsulent PSA",
           "description": "Driv hele kjernevirksomheten i et konsulentselskap: CRM og salgspipeline, prosjekter med oppgaver og milepæler, time- og utleggsføring, fakturering med kundefordringer, og prosjektlønnsomhet.",
           "category": "Profesjonelle tjenester"
+        },
+        "es": {
+          "name": "Consultoría PSA",
+          "description": "Gestiona todo el negocio de una consultora: CRM y embudo de ventas, proyectos con tareas e hitos, registro de horas y gastos, facturación con cuentas por cobrar y rentabilidad por proyecto.",
+          "category": "Servicios profesionales"
+        },
+        "de": {
+          "name": "Beratung PSA",
+          "description": "Führe das gesamte Kerngeschäft einer Beratung: CRM und Vertriebspipeline, Projekte mit Aufgaben und Meilensteinen, Zeit- und Spesenerfassung, Rechnungsstellung mit Forderungen sowie Projektrentabilität.",
+          "category": "Professionelle Dienstleistungen"
+        },
+        "fr": {
+          "name": "Conseil PSA",
+          "description": "Pilotez tout le cœur de métier d’un cabinet de conseil : CRM et pipeline commercial, projets avec tâches et jalons, suivi des temps et des frais, facturation et créances, et rentabilité par projet.",
+          "category": "Services professionnels"
+        },
+        "it": {
+          "name": "Consulenza PSA",
+          "description": "Gestisci l’intero core business di una società di consulenza: CRM e pipeline di vendita, progetti con attività e milestone, registrazione di ore e spese, fatturazione con crediti e redditività di progetto.",
+          "category": "Servizi professionali"
+        },
+        "pt": {
+          "name": "Consultoria PSA",
+          "description": "Gere todo o negócio principal de uma consultora: CRM e funil de vendas, projetos com tarefas e marcos, registo de horas e despesas, faturação com contas a receber e rentabilidade por projeto.",
+          "category": "Serviços profissionais"
+        },
+        "nl": {
+          "name": "Advies PSA",
+          "description": "Voer de hele kernbedrijfsvoering van een adviesbureau: CRM en salespijplijn, projecten met taken en mijlpalen, uren- en kostenregistratie, facturatie met debiteuren, en projectrendement.",
+          "category": "Zakelijke dienstverlening"
+        },
+        "sv": {
+          "name": "Konsult PSA",
+          "description": "Driv hela kärnverksamheten i ett konsultbolag: CRM och säljpipeline, projekt med uppgifter och milstolpar, tid- och utläggsregistrering, fakturering med kundfordringar, och projektlönsamhet.",
+          "category": "Professionella tjänster"
+        },
+        "da": {
+          "name": "Konsulent PSA",
+          "description": "Driv hele kerneforretningen i et konsulenthus: CRM og salgspipeline, projekter med opgaver og milepæle, tids- og udgiftsregistrering, fakturering med tilgodehavender, og projektrentabilitet.",
+          "category": "Professionelle tjenester"
+        },
+        "fi": {
+          "name": "Konsultointi PSA",
+          "description": "Pyöritä konsulttiyrityksen koko ydinliiketoimintaa: CRM ja myyntiputki, projektit tehtävineen ja välitavoitteineen, työajan ja kulujen kirjaus, laskutus ja myyntisaamiset sekä projektien kannattavuus.",
+          "category": "Ammatilliset palvelut"
+        },
+        "pl": {
+          "name": "Doradztwo PSA",
+          "description": "Prowadź całą działalność firmy doradczej: CRM i lejek sprzedaży, projekty z zadaniami i kamieniami milowymi, rejestrację godzin i wydatków, fakturowanie z należnościami oraz rentowność projektów.",
+          "category": "Usługi profesjonalne"
         }
       }
     },
@@ -195,6 +295,56 @@
           "name": "Utlegg",
           "description": "Registrering og godkjenning av ansattes utlegg, med AI-skanning av kvitteringer, spesifiserte linjer og et ferdig dashbord.",
           "category": "Økonomi"
+        },
+        "es": {
+          "name": "Gastos",
+          "description": "Registro y aprobación de gastos de empleados, con escaneo de recibos por IA, líneas detalladas y un panel listo para usar.",
+          "category": "Finanzas"
+        },
+        "de": {
+          "name": "Spesen",
+          "description": "Erfassung und Genehmigung von Mitarbeiterspesen, mit KI-Belegerkennung, einzelnen Positionen und fertigem Dashboard.",
+          "category": "Finanzen"
+        },
+        "fr": {
+          "name": "Notes de frais",
+          "description": "Saisie et validation des notes de frais, avec lecture des reçus par IA, lignes détaillées et tableau de bord prêt à l’emploi.",
+          "category": "Finance"
+        },
+        "it": {
+          "name": "Note spese",
+          "description": "Registrazione e approvazione delle note spese, con scansione delle ricevute tramite IA, voci dettagliate e dashboard pronta all’uso.",
+          "category": "Finanza"
+        },
+        "pt": {
+          "name": "Despesas",
+          "description": "Registo e aprovação de despesas de colaboradores, com leitura de recibos por IA, linhas detalhadas e um painel pronto a usar.",
+          "category": "Finanças"
+        },
+        "nl": {
+          "name": "Declaraties",
+          "description": "Registratie en goedkeuring van declaraties, met AI-bonscanning, gespecificeerde regels en een kant-en-klaar dashboard.",
+          "category": "Financiën"
+        },
+        "sv": {
+          "name": "Utlägg",
+          "description": "Registrering och godkännande av anställdas utlägg, med AI-skanning av kvitton, specificerade rader och en färdig instrumentpanel.",
+          "category": "Ekonomi"
+        },
+        "da": {
+          "name": "Udlæg",
+          "description": "Registrering og godkendelse af medarbejderes udlæg, med AI-scanning af kvitteringer, specificerede linjer og et færdigt dashboard.",
+          "category": "Økonomi"
+        },
+        "fi": {
+          "name": "Kulut",
+          "description": "Työntekijöiden kulujen kirjaus ja hyväksyntä, tekoälyn kuittiskannauksella, eritellyillä riveillä ja valmiilla koontinäytöllä.",
+          "category": "Talous"
+        },
+        "pl": {
+          "name": "Wydatki",
+          "description": "Rejestracja i zatwierdzanie wydatków pracowników, ze skanowaniem paragonów przez AI, pozycjami szczegółowymi i gotowym pulpitem.",
+          "category": "Finanse"
         }
       }
     },
@@ -253,6 +403,56 @@
           "name": "Kontrakter",
           "description": "Hold oversikt over kontrakter, leverandører og fornyelser med AI-dokumentskanning, varsler om oppsigelsesfrister, statusflyt og et etterlevelsesdashbord.",
           "category": "Juridisk og etterlevelse"
+        },
+        "es": {
+          "name": "Contratos",
+          "description": "Controla contratos, proveedores y renovaciones con escaneo de documentos por IA, avisos de preaviso, flujo de estados y un panel de cumplimiento.",
+          "category": "Legal y cumplimiento"
+        },
+        "de": {
+          "name": "Verträge",
+          "description": "Behalte Verträge, Lieferanten und Verlängerungen im Blick – mit KI-Dokumentenerkennung, Warnungen zu Kündigungsfristen, Statusablauf und Compliance-Dashboard.",
+          "category": "Recht und Compliance"
+        },
+        "fr": {
+          "name": "Contrats",
+          "description": "Suivez contrats, fournisseurs et renouvellements avec lecture des documents par IA, alertes de préavis, flux de statuts et tableau de bord de conformité.",
+          "category": "Juridique et conformité"
+        },
+        "it": {
+          "name": "Contratti",
+          "description": "Tieni traccia di contratti, fornitori e rinnovi con scansione documenti tramite IA, avvisi sui termini di disdetta, flusso di stati e dashboard di conformità.",
+          "category": "Legale e conformità"
+        },
+        "pt": {
+          "name": "Contratos",
+          "description": "Acompanhe contratos, fornecedores e renovações com leitura de documentos por IA, alertas de pré-aviso, fluxo de estados e um painel de conformidade.",
+          "category": "Jurídico e conformidade"
+        },
+        "nl": {
+          "name": "Contracten",
+          "description": "Houd contracten, leveranciers en verlengingen bij met AI-documentscanning, waarschuwingen voor opzegtermijnen, een statusworkflow en een compliance-dashboard.",
+          "category": "Juridisch en compliance"
+        },
+        "sv": {
+          "name": "Avtal",
+          "description": "Håll koll på avtal, leverantörer och förnyelser med AI-dokumentskanning, varningar om uppsägningstider, statusflöde och en efterlevnadspanel.",
+          "category": "Juridik och efterlevnad"
+        },
+        "da": {
+          "name": "Kontrakter",
+          "description": "Hold styr på kontrakter, leverandører og fornyelser med AI-dokumentscanning, varsler om opsigelsesfrister, statusflow og et complianceoverblik.",
+          "category": "Jura og compliance"
+        },
+        "fi": {
+          "name": "Sopimukset",
+          "description": "Seuraa sopimuksia, toimittajia ja uusimisia tekoälyn dokumenttiskannauksella, irtisanomisaikojen hälytyksillä, tilavirralla ja vaatimustenmukaisuuden koontinäytöllä.",
+          "category": "Juridiikka ja vaatimustenmukaisuus"
+        },
+        "pl": {
+          "name": "Umowy",
+          "description": "Śledź umowy, dostawców i odnowienia dzięki skanowaniu dokumentów przez AI, alertom o okresach wypowiedzenia, przepływowi statusów i pulpitowi zgodności.",
+          "category": "Prawo i zgodność"
         }
       }
     },
@@ -311,6 +511,56 @@
           "name": "Avviksrapportering",
           "description": "Meld avvik og hendelser med AI-fotoskanning, alvorlighetsvurdering, godkjenningsflyt, koblede korrigerende tiltak og et HMS-dashbord.",
           "category": "HMS og etterlevelse"
+        },
+        "es": {
+          "name": "Notificación de incidentes",
+          "description": "Notifica incidentes y desviaciones con escaneo de fotos por IA, clasificación por gravedad, flujo de revisión, acciones correctivas vinculadas y un panel de cumplimiento en PRL.",
+          "category": "Seguridad, salud y cumplimiento"
+        },
+        "de": {
+          "name": "Vorfallmeldung",
+          "description": "Melde Vorfälle und Abweichungen mit KI-Fotoerkennung, Schweregrad-Triage, Prüfablauf, verknüpften Korrekturmaßnahmen und einem HSE-Compliance-Dashboard.",
+          "category": "Arbeitsschutz und Compliance"
+        },
+        "fr": {
+          "name": "Déclaration d’incidents",
+          "description": "Déclarez incidents et écarts avec analyse des photos par IA, tri par gravité, flux de revue, actions correctives liées et tableau de bord conformité HSE.",
+          "category": "Santé, sécurité et conformité"
+        },
+        "it": {
+          "name": "Segnalazione incidenti",
+          "description": "Segnala incidenti e non conformità con scansione delle foto tramite IA, triage per gravità, flusso di revisione, azioni correttive collegate e dashboard di conformità HSE.",
+          "category": "Salute, sicurezza e conformità"
+        },
+        "pt": {
+          "name": "Registo de incidentes",
+          "description": "Comunique incidentes e desvios com leitura de fotografias por IA, triagem por gravidade, fluxo de revisão, ações corretivas associadas e um painel de conformidade HSE.",
+          "category": "Saúde, segurança e conformidade"
+        },
+        "nl": {
+          "name": "Incidentmelding",
+          "description": "Meld incidenten en afwijkingen met AI-fotoanalyse, triage op ernst, een beoordelingsworkflow, gekoppelde corrigerende maatregelen en een HSE-compliance-dashboard.",
+          "category": "Veiligheid, gezondheid en compliance"
+        },
+        "sv": {
+          "name": "Avvikelserapportering",
+          "description": "Rapportera tillbud och avvikelser med AI-fotoanalys, allvarlighetsbedömning, granskningsflöde, kopplade korrigerande åtgärder och en HMS-panel.",
+          "category": "Hälsa, säkerhet och efterlevnad"
+        },
+        "da": {
+          "name": "Hændelsesrapportering",
+          "description": "Rapportér hændelser og afvigelser med AI-fotoscanning, alvorlighedsvurdering, godkendelsesflow, tilknyttede korrigerende handlinger og et HSE-overblik.",
+          "category": "Sundhed, sikkerhed og compliance"
+        },
+        "fi": {
+          "name": "Poikkeamailmoitukset",
+          "description": "Ilmoita poikkeamista ja vaaratilanteista tekoälyn kuva-analyysillä, vakavuusluokittelulla, käsittelyvirralla, liitetyillä korjaavilla toimenpiteillä ja HSE-koontinäytöllä.",
+          "category": "Työterveys, turvallisuus ja vaatimustenmukaisuus"
+        },
+        "pl": {
+          "name": "Zgłaszanie zdarzeń",
+          "description": "Zgłaszaj zdarzenia i odchylenia dzięki analizie zdjęć przez AI, klasyfikacji według wagi, przepływowi weryfikacji, powiązanym działaniom korygującym i pulpitowi zgodności BHP.",
+          "category": "BHP i zgodność"
         }
       }
     }

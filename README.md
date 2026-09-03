@@ -114,8 +114,25 @@ Snapp would require a frontend release to translate it.
 
 | Locale | Language | Status |
 |--------|----------|--------|
-| `en`   | English  | The top-level `name` / `description` / `category` **are** the English source — do not repeat them under `i18n`. |
-| `no`   | Norwegian | Required. |
+| `en`   | English    | The top-level `name` / `description` / `category` **are** the English source — do not repeat them under `i18n`. |
+| `no`   | Norwegian  | Required. |
+| `es`   | Spanish    | Required. |
+| `de`   | German     | Required. |
+| `fr`   | French     | Required. |
+| `it`   | Italian    | Required. |
+| `pt`   | Portuguese | Required. |
+| `nl`   | Dutch      | Required. |
+| `sv`   | Swedish    | Required. |
+| `da`   | Danish     | Required. |
+| `fi`   | Finnish    | Required. |
+| `pl`   | Polish     | Required. |
+
+Note that snill picks a Snapp's text with the **product** locale — the language
+of the snill shell itself — not the language of the app being created (there
+isn't one yet). snill currently ships `en` and `no` as product locales, so the
+other entries above are **pre-translated and not yet read by anything**. They
+are here so that shipping a new product locale is a snill release only, with no
+matching change required in this repo.
 
 Only the three fields the picker actually renders need translating:
 
