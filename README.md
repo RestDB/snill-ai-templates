@@ -67,7 +67,14 @@ A single, hand-edited file listing every template:
       ],
       "screenshots": [
         { "src": "templates/consulting/screenshot-2.png", "caption": "The data-model editor" }
-      ]
+      ],
+      "i18n": {
+        "no": {
+          "name": "Konsulent",
+          "description": "Håndter kunder, konsulenter, prosjekter og fakturerbar timeføring, med et ferdig dashbord.",
+          "category": "Profesjonelle tjenester"
+        }
+      }
     }
   ]
 }
@@ -91,8 +98,60 @@ A single, hand-edited file listing every template:
 | `authorUrl` | no | Profile or org link for the author. |
 | `version` | no | Semver for the template itself (`1.0.0`). Bumped when the template's `datamodel.json` changes meaningfully. |
 | `updatedAt` | no | ISO date (`YYYY-MM-DD`) of the last meaningful update. Drives staleness signals in the picker. |
+| `i18n` | see below | Translations of the user-visible fields, keyed by locale. **Required for every locale snill ships** — see *Languages* below. |
 
 Paths are repo-relative; the snill backend resolves them to raw GitHub URLs.
+
+### Languages
+
+Snapp text is **content, not app chrome** — it lives here, versioned with the
+template, not in snill's frontend translation catalog. That is deliberate: this
+repo ships independently of snill releases, so a translation held in the
+frontend would go stale the moment a Snapp is added or reworded, and adding a
+Snapp would require a frontend release to translate it.
+
+**Every locale snill ships must be present in `i18n` for every template.**
+
+| Locale | Language | Status |
+|--------|----------|--------|
+| `en`   | English    | The top-level `name` / `description` / `category` **are** the English source — do not repeat them under `i18n`. |
+| `no`   | Norwegian  | Required. |
+| `es`   | Spanish    | Required. |
+| `de`   | German     | Required. |
+| `fr`   | French     | Required. |
+| `it`   | Italian    | Required. |
+| `pt`   | Portuguese | Required. |
+| `nl`   | Dutch      | Required. |
+| `sv`   | Swedish    | Required. |
+| `da`   | Danish     | Required. |
+| `fi`   | Finnish    | Required. |
+| `pl`   | Polish     | Required. |
+
+Note that snill picks a Snapp's text with the **product** locale — the language
+of the snill shell itself — not the language of the app being created (there
+isn't one yet). snill currently ships `en` and `no` as product locales, so the
+other entries above are **pre-translated and not yet read by anything**. They
+are here so that shipping a new product locale is a snill release only, with no
+matching change required in this repo.
+
+Only the three fields the picker actually renders need translating:
+
+```json
+"i18n": {
+  "no": { "name": "…", "description": "…", "category": "…" }
+}
+```
+
+`features`, `screenshotCaption` and `screenshots[].caption` are **not** rendered
+by snill today, so leave them English until something displays them.
+
+A missing locale falls back to the English source rather than breaking, so a
+partially-translated Snapp still works — it just shows English to that user.
+
+**When snill adds a language,** add the new locale key to every template in this
+file and update the table above. Categories must be translated *consistently
+across templates*: the picker builds its filter chips from `category`, so two
+spellings of the same category produce two chips.
 
 ## Contributing a Snapp
 
