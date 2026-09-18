@@ -23,6 +23,12 @@
               "icon": "plus"
             },
             {
+              "type": "page",
+              "page": "dashboard",
+              "label": "Dashboard",
+              "icon": "layout-dashboard"
+            },
+            {
               "type": "collection",
               "collection": "incidents",
               "icon": "shield-alert"
