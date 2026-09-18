@@ -988,7 +988,7 @@
       ],
       "listFilters": [
         {
-          "field": "consultant._id",
+          "field": "_createdBy",
           "value": "$loggedOnUser",
           "label": "My Entries",
           "active": false
@@ -2347,7 +2347,7 @@
       "ownerAccess": "own-modify",
       "listFilters": [
         {
-          "field": "consultant._id",
+          "field": "_createdBy",
           "value": "$loggedOnUser",
           "label": "My Expenses",
           "active": false

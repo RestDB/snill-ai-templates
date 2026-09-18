@@ -695,7 +695,7 @@
       ],
       "listFilters": [
         {
-          "field": "consultant._id",
+          "field": "_createdBy",
           "value": "$loggedOnUser",
           "label": "My Entries",
           "active": false
