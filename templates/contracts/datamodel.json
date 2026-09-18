@@ -265,8 +265,7 @@
           "annual_value": {
             "type": "number",
             "format": "currency",
-            "title": "Annual Value",
-            "x-currency": "USD"
+            "title": "Annual Value"
           },
           "currency": {
             "type": "string",
@@ -350,7 +349,9 @@
         },
         {
           "field": "action_required",
-          "value": true,
+          "value": {
+            "$gt": 0
+          },
           "label": "Action Required (notice window)"
         },
         {
@@ -643,7 +644,9 @@
               "collection": "contracts",
               "query": {
                 "status": "active",
-                "action_required": true
+                "action_required": {
+                  "$gt": 0
+                }
               },
               "aggregate": "count",
               "width": "1"
